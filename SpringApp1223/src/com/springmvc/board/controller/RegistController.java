@@ -10,12 +10,13 @@ import com.model2.board.model.BoardDAO;
 import com.model2.domain.Board;
 
 public class RegistController implements Controller{
-	BoardDAO boardDAO = new BoardDAO();
+	private BoardDAO boardDAO;
+	public void setBoardDAO(BoardDAO boardDAO) {
+		this.boardDAO = boardDAO;
+	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//3단계: 일시키기
-		request.setCharacterEncoding("utf-8");
-		
 		String  title = request.getParameter("title");
 		String  writer = request.getParameter("writer");
 		String  content = request.getParameter("content");
