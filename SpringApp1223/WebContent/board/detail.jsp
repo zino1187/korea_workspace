@@ -65,13 +65,28 @@ $(function(){
 		edit();//동기방식으로 요청하겠다
 	});
 	
+	$($("input[type='button']")[1]).click(function(){ //삭제버튼
+		del();//동기방식으로 요청하겠다
+	});
+	
 	getCommentList(); //댓글 목록 비동기로 가져오기!!!
 });
+//글삭제 요청 
+function del(){
+	if(confirm("삭제하시겠어요?")){
+		$("form").attr({
+			action:"/board/delete",
+			method:"post" /*form태그 안에 잇는 히든값인 board_id가 전송됨*/
+		});		
+		$("form").submit();
+	}
+}
 
-//글등록 요청
+
+//글수정 요청
 function edit(){
 	$("form").attr({
-		action:"/board/edit.do",
+		action:"/board/edit",
 		method:"post"
 	});		
 	$("form").submit();

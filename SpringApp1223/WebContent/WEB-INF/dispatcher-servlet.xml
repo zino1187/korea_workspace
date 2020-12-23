@@ -16,6 +16,9 @@
 			<props>
 				<prop key="/board/list">listController</prop>
 				<prop key="/board/regist">registController</prop>
+				<prop key="/board/detail">detailController</prop>
+				<prop key="/board/delete">deleteController</prop>
+				<prop key="/board/edit">editController</prop>
 			</props>
 		</property>
 	</bean>
@@ -40,7 +43,18 @@
 		class="com.springmvc.board.controller.RegistController" 
 		p:boardDAO-ref="boardDAO"/>
 
-	
+	<bean id="detailController" 
+		class="com.springmvc.board.controller.DetailController"
+		p:boardDAO-ref="boardDAO"/>
+		
+	<bean id="deleteController" 
+		class="com.springmvc.board.controller.DeleteController"
+		p:boardDAO-ref="boardDAO"/>
+		
+	<bean id="editController" 
+		class="com.springmvc.board.controller.EditController"
+		p:boardDAO-ref="boardDAO"/>
+				
 </beans>
 
 
