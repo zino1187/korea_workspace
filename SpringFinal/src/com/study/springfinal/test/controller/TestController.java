@@ -13,6 +13,7 @@ public class TestController{
 	@RequestMapping(value="/hi", method=RequestMethod.GET)
 	public ModelAndView test() {
 		ModelAndView mav = new ModelAndView("test/result");//setViewName°ú µ¿ÀÏ
+		System.out.println("contorller called");
 		return mav;
 	}
 }

@@ -10,6 +10,6 @@
 </script>
 </head>
 <body>
-스프링 MVC 테스트 성공!!!
+스프링 MVC 테스트 성공했네요!!!
 </body>
 </html>
