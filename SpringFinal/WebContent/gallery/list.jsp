@@ -1,14 +1,14 @@
-<%@page import="com.model2.domain.Board"%>
-<%@page import="common.board.Pager"%>
+<%@page import="com.study.springfinal.common.Pager"%>
+<%@page import="com.study.springfinal.domain.Gallery"%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
 
 	//포워딩을 통해 넘겨받은 request 객체에 담겨진 데이터 꺼내기
-	List<Board> boardList = (List)request.getAttribute("boardList");
-	out.print("게시물 수는 "+boardList.size());
+	List<Gallery> galleryList = (List)request.getAttribute("galleryList");
+	out.print("게시물 수는 "+galleryList.size());
 	Pager pager = new Pager();
-	pager.init(request, boardList);
+	pager.init(request, galleryList);
 %>
 <!DOCTYPE html>
 <html>
@@ -49,10 +49,10 @@ tr:nth-child(even) {
 		%>
 		<%for(int i=1;i<=pager.getPageSize();i++){%>
 		<%if(num<1)break; %>
-		<%Board board = boardList.get(curPos++);%>
+		<%Gallery board = galleryList.get(curPos++);%>
 		<tr>
 			<td><%=num-- %></td>
-			<td><a href="/board/detail?board_id=<%=board.getBoard_id()%>"><%=board.getTitle() %></a>[<%=board.getCnt() %>]</td>
+			<td><a href="/board/detail?board_id=<%=board.getGallery_id()%>"><%=board.getTitle() %></a></td>
 			<td><%=board.getWriter() %></td>
 			<td><%=board.getRegdate().substring(0,10) %></td>
 			<td><%=board.getHit() %></td>
@@ -64,7 +64,7 @@ tr:nth-child(even) {
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3">
+			<td colspan="5">
 				<button onClick="location.href='/board/regist_form.jsp'"> 글등록</button>
 			</td>
 		</tr>
