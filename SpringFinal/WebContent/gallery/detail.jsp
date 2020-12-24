@@ -1,10 +1,10 @@
-<%@page import="com.model2.domain.Board"%>
+<%@page import="com.study.springfinal.domain.Gallery"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
 
 	//정말로 포워딩이 요청을 유지햇는지 테스트해보자!!
-	Board board =(Board)request.getAttribute("board");
-	out.print("요청객체에 담겨진 board는 "+ board);
+	Gallery gallery =(Gallery)request.getAttribute("gallery");
+	out.print("요청객체에 담겨진 gallery "+ gallery);
 		
 %>
 <!DOCTYPE html>
@@ -75,7 +75,7 @@ $(function(){
 function del(){
 	if(confirm("삭제하시겠어요?")){
 		$("form").attr({
-			action:"/board/delete",
+			action:"/gallery/delete",
 			method:"post" /*form태그 안에 잇는 히든값인 board_id가 전송됨*/
 		});		
 		$("form").submit();
@@ -86,7 +86,7 @@ function del(){
 //글수정 요청
 function edit(){
 	$("form").attr({
-		action:"/board/edit",
+		action:"/gallery/edit",
 		method:"post"
 	});		
 	$("form").submit();
@@ -98,7 +98,7 @@ function getCommentList(){
 		url:"/comment/list.do", 
 		type:"get", 
 		data:{
-			board_id : <%=board.getBoard_id()%>
+			gallery_id : <%=gallery.getGallery_id()%>
 		}, 
 		success:function(result){
 			//서버에서 전송되어온 데이터는 json 객체가 아닌, 문자열일 뿐이다.. 
@@ -133,7 +133,7 @@ function registComment(){
 		data:{ 
 			msg:$("input[name='msg']").val(),
 			author:$("input[name='author']").val(),
-			board_id: <%=board.getBoard_id()%>
+			gallery_id: <%=gallery.getGallery_id()%>
 		},
 		//피드백은 success로 받는다, 즉 서버에서 에러없이 데이터가 결과값이 전송되면
 		//success 우측에 명시된 익명함수가 동작하게 된다.. 
@@ -158,14 +158,17 @@ function registComment(){
 
 <div class="container">
   <form>
-  	<input type="hidden" name="board_id" value="<%=board.getBoard_id()%>">
-    <input type="text" name="title" value="<%=board.getTitle()%>">
-    <input type="text" name="writer" value="<%=board.getWriter()%>">
-    <textarea id="content" name="content" style="height:200px"><%=board.getContent() %></textarea>
+  	<input type="hidden" name="gallery_id" value="<%=gallery.getGallery_id()%>">
+  	<input type="hidden" name="filename" value="<%=gallery.getFilename()%>">
+  	
+  	
+    <input type="text" name="title" value="<%=gallery.getTitle()%>">
+    <input type="text" name="writer" value="<%=gallery.getWriter()%>">
+    <textarea id="content" name="content" style="height:200px"><%=gallery.getContent() %></textarea>
     
     <input type="button" value="글수정">
     <input type="button" value="글삭제">
-    <input type="button" value="목록보기" onClick="location.href='/board/list.do'">
+    <input type="button" value="목록보기" onClick="location.href='/gallery/list'">
 	<div class="reply-box">
 		<input type="text" name="msg" placeholder="댓글 입력.." style="width:75%">
 		<input type="text" name="author" placeholder="작성자 입력.." style="width:15%">

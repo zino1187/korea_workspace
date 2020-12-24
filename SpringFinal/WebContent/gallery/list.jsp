@@ -37,6 +37,7 @@ tr:nth-child(even) {
 	<table>
 		<tr>
 			<th>No</th>
+			<th>Image</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>등록일</th>
@@ -52,7 +53,8 @@ tr:nth-child(even) {
 		<%Gallery board = galleryList.get(curPos++);%>
 		<tr>
 			<td><%=num-- %></td>
-			<td><a href="/board/detail?board_id=<%=board.getGallery_id()%>"><%=board.getTitle() %></a></td>
+			<td><img src="/data/<%=board.getFilename()%>" width="50px"></td>
+			<td><a href="/gallery/detail?gallery_id=<%=board.getGallery_id()%>"><%=board.getTitle() %></a></td>
 			<td><%=board.getWriter() %></td>
 			<td><%=board.getRegdate().substring(0,10) %></td>
 			<td><%=board.getHit() %></td>

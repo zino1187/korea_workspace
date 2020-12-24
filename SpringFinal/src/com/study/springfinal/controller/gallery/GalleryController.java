@@ -19,13 +19,14 @@ import com.study.springfinal.domain.Gallery;
 import com.study.springfinal.model.dao.GalleryDAO;
 
 @Controller
+@RequestMapping("/gallery")
 public class GalleryController{
 	//표시를 할테니, 여기에 넣어주세요!!
 	@Autowired
 	private GalleryDAO galleryDAO;
 		
 	//스프링 프레임웍은 업로드 컴포넌트로, apache fileupload를 사용함		
-	@RequestMapping(value="/gallery/regist", method=RequestMethod.POST)
+	@RequestMapping(value="/regist", method=RequestMethod.POST)
 	public String regist(Gallery gallery, HttpServletRequest request) {
 		
 		//물리적 저장
@@ -62,7 +63,7 @@ public class GalleryController{
 	}
 	
 	//목록 가져오기
-	@RequestMapping(value="/gallery/list", method=RequestMethod.GET)
+	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public ModelAndView selectAll() {
 		//3단계
 		List galleryList = galleryDAO.selectAll();
@@ -74,7 +75,48 @@ public class GalleryController{
 		return mav;
 	}
 	
+	//상세보기 요청 처리 
+	@RequestMapping(value="/detail", method=RequestMethod.GET)
+	public ModelAndView select(int gallery_id) {
+		System.out.println("gallery_id "+gallery_id);
+		Gallery gallery  =galleryDAO.select(gallery_id);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("gallery", gallery);
+		mav.setViewName("gallery/detail");
+		return mav;
+	}
+	
+	//글 수정 요청 처리 
+	@RequestMapping(value="/edit", method=RequestMethod.POST)
+	public String edit(Gallery gallery) {
+		//3단계:일시키기
+		galleryDAO.update(gallery);
+		
+		//4단계:저장할 것이 없다. 왜 ?? 요청을 끊고 detail을 새로 접속할거니깐..
+		return "redirect:/gallery/detail?gallery_id="+gallery.getGallery_id();
+	}
+	
+	//글 삭제 요청 처리
+	@RequestMapping(value="/delete", method=RequestMethod.POST)
+	public String delete(int gallery_id) {
+		//3단계: 일 시키기 
+		galleryDAO.delete(gallery_id);
+		
+		//4단계: 저장할것이 없다. 왜? list를 새롭게 접속할거니깐..
+		return "redirect:/gallery/list";
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
