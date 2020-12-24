@@ -2,6 +2,7 @@ package com.study.springfinal.controller.gallery;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.study.springfinal.common.FileManager;
 import com.study.springfinal.domain.Gallery;
@@ -56,9 +58,45 @@ public class GalleryController{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return "redirect:/gallery/list";
 	}
+	
+	//목록 가져오기
+	@RequestMapping(value="/gallery/list", method=RequestMethod.GET)
+	public ModelAndView selectAll() {
+		//3단계
+		List galleryList = galleryDAO.selectAll();
+		
+		//4단계: 저장 
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("galleryList", galleryList);
+		mav.setViewName("gallery/list");
+		return mav;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
