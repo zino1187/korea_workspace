@@ -12,7 +12,9 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MybatisConfigManager {
 	//2) 생성자를 묶었으므로, 현재 클래스에서 인스턴스를 제공하지 않으면 사용할 방법이 없다.
 	//따라서 현재 클래스에서 getter를 제공해주자!!
