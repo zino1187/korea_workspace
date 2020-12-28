@@ -15,8 +15,10 @@ import com.koreait.mylegacy.model.pool.PoolManager;
 //Dept 테이블에 대한 CRUD 를 수행하되, jdbc기반으로 코드를 작성
 @Repository
 public class JdbcEmpDAO {
-	@Autowired
-	private PoolManager poolManager;
+	private Connection con;
+	public void setCon(Connection con) {
+		this.con = con;
+	}
 	
 	public List selectAll() {
 		List list = null;
@@ -31,21 +33,26 @@ public class JdbcEmpDAO {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		String sql="insert into emp(empno, ename, sal, deptno) values(?,?,?,?)";
-		
-		con=poolManager.getConnection();
+	
 		try {
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, emp.getEmpno());
 			pstmt.setString(2, emp.getEname());
 			pstmt.setInt(3,emp.getSal());
-			pstmt.setInt(4,emp.getDeptno());
+			pstmt.setInt(4,emp.getDept().getDeptno());
 			
 			result=pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			poolManager.freeConnection(con, pstmt);
+		}finally{
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return result;
 	}

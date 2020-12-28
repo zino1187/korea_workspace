@@ -4,7 +4,7 @@ public class Emp {
 	private int empno;
 	private String ename;
 	private int sal;
-	private int deptno;
+	private Dept dept;
 	
 	public int getEmpno() {
 		return empno;
@@ -24,11 +24,11 @@ public class Emp {
 	public void setSal(int sal) {
 		this.sal = sal;
 	}
-	public int getDeptno() {
-		return deptno;
+	public Dept getDept() {
+		return dept;
 	}
-	public void setDeptno(int deptno) {
-		this.deptno = deptno;
+	public void setDept(Dept dept) {
+		this.dept = dept;
 	}
 	
 	
