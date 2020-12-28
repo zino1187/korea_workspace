@@ -1,6 +1,8 @@
 package com.koreait.mylegacy.model.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -29,6 +31,10 @@ public class EmpService {
 	//글목록
 	public List selectAll() {
 		List list = null;
+		Connection con = poolManager.getConnection();
+		jdbcEmpDAO.setCon(con);//Connection 주입
+		list = jdbcEmpDAO.selectAll();
+		poolManager.freeConnection(con);
 		return list;
 	}
 	
@@ -70,7 +76,7 @@ public class EmpService {
 				e.printStackTrace();
 			}
 		}
-		
+		poolManager.freeConnection(con);
 		return result;
 	}
 	

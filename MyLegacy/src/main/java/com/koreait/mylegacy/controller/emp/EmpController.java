@@ -1,5 +1,7 @@
 package com.koreait.mylegacy.controller.emp;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,17 +57,24 @@ public class EmpController {
 		//서비스에게 사원등록 요청!!!
 		emp.setDept(dept); //emp와 부서를 합체!!!
 		
-		//int result = empService.regist(emp);
-		//logger.debug("등록결과 "+result);
+		int result = empService.regist(emp);
+		logger.debug("등록결과 "+result);
 		
-		return null;
+		return "redirect:/emp/list";
 	}
 	
 	//사원목록
 	@RequestMapping(value="/emp/list", method=RequestMethod.GET)
 	public ModelAndView selectAll() {
 		ModelAndView mav = new ModelAndView();
+			
+		//3단계 일시킨다 
+		List empList = empService.selectAll();
+		logger.debug("empList : "+empList);
 		
+		//4단계: 저장
+		mav.addObject("empList", empList);
+		mav.setViewName("emp/list");
 		
 		return mav;
 	}
