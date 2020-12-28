@@ -1,5 +1,8 @@
 package com.koreait.mylegacy.model.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,24 @@ public class JdbcDeptDAO {
 	}
 	public int regist(Dept dept) {
 		int result=0;
-		System.out.println("풀매니져"+poolManager);
+		Connection con=null; 
+		PreparedStatement pstmt=null;
+		String sql="insert into dept(deptno, dname, loc) values(?,?,?)";
+		
+		con=poolManager.getConnection();
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, dept.getDeptno());
+			pstmt.setString(2, dept.getDname());
+			pstmt.setString(3, dept.getLoc());
+			
+			result=pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			poolManager.freeConnection(con, pstmt);
+		}
 		return result;
 	}
 	public int update(Dept dept) {

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.koreait.mylegacy.model.dao.JdbcDeptDAO;
+import com.koreait.mylegacy.model.dao.JdbcEmpDAO;
 import com.koreait.mylegacy.model.domain.Dept;
 import com.koreait.mylegacy.model.domain.Emp;
 
@@ -15,6 +16,9 @@ import com.koreait.mylegacy.model.domain.Emp;
 public class EmpController {
 	@Autowired
 	private JdbcDeptDAO jdbcDeptDAO;
+	
+	@Autowired
+	private JdbcEmpDAO jdbcEmpDAO;
 	
 	//사원등록 폼요청
 	@RequestMapping("/emp/registform")
@@ -35,10 +39,14 @@ public class EmpController {
 		System.out.println(emp.getEname());
 		System.out.println(emp.getSal());
 		System.out.println(emp.getDeptno());
-			
+		
 		//DB에 등록!!!
-		System.out.println("jdbcDeptDAO 는 "+jdbcDeptDAO);
-		jdbcDeptDAO.regist(dept);
+		//부서등록과 사원등록이라는 두개의 업무가 모두 성공되어야, 전체를 성공으로 간주하는 트랜잭션 상황!!!
+		int result = jdbcDeptDAO.regist(dept);
+		System.out.println("result : "+result);
+		
+		int result2 = jdbcEmpDAO.regist(emp);
+		System.out.println("result2 : "+result2);
 		
 		return null;
 	}
