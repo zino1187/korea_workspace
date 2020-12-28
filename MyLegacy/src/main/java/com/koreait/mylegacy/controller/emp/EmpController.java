@@ -12,7 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.mylegacy.model.domain.Dept;
 import com.koreait.mylegacy.model.domain.Emp;
-import com.koreait.mylegacy.model.service.EmpService;
+import com.koreait.mylegacy.model.service.JdbcEmpService;
+import com.koreait.mylegacy.model.service.MybatisEmpService;
 
 //component-scan대상이 되려면 어노테이션을 지정해야 한다
 
@@ -21,7 +22,10 @@ public class EmpController {
 	private static final Logger logger=LoggerFactory.getLogger(EmpController.class);
 	
 	@Autowired
-	private EmpService empService;
+	private JdbcEmpService empService;
+	
+	@Autowired
+	private MybatisEmpService mybatisEmpService;
 
 	
 	//사원등록 폼요청
@@ -69,7 +73,7 @@ public class EmpController {
 		ModelAndView mav = new ModelAndView();
 			
 		//3단계 일시킨다 
-		List empList = empService.selectAll();
+		List empList = mybatisEmpService.selectAll();
 		logger.debug("empList : "+empList);
 		
 		//4단계: 저장

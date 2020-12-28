@@ -4,7 +4,7 @@ public class Emp {
 	private int empno;
 	private String ename;
 	private int sal;
-	private Dept dept;
+	private Dept dept; //1:1관계
 	
 	public int getEmpno() {
 		return empno;

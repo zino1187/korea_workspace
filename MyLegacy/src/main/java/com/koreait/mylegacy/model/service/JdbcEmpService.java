@@ -20,7 +20,7 @@ import com.koreait.mylegacy.model.pool.PoolManager;
  * 제어하는 역할, 만일 Service의 존재가 없다면, 컨트롤러가 모델 영역의 복잡한 처리를
  * 직접 해야하므로, 어플리케이션 설계상 영역 구분이 약해지게 된다.. */
 @Service
-public class EmpService {
+public class JdbcEmpService {
 	@Autowired
 	private PoolManager poolManager;
 	@Autowired
