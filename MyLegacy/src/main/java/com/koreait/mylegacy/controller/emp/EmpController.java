@@ -1,9 +1,12 @@
 package com.koreait.mylegacy.controller.emp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.mylegacy.model.domain.Dept;
 import com.koreait.mylegacy.model.domain.Emp;
@@ -13,6 +16,7 @@ import com.koreait.mylegacy.model.service.EmpService;
 
 @Controller
 public class EmpController {
+	private static final Logger logger=LoggerFactory.getLogger(EmpController.class);
 	
 	@Autowired
 	private EmpService empService;
@@ -29,14 +33,20 @@ public class EmpController {
 	@RequestMapping(value="/emp/regist", method=RequestMethod.POST)
 	public String regist(Dept dept, Emp emp) {
 		//파라미터 받아와 출력해보기!!
+		//log4j라는 라이브러리는 우리가 개발시 디버그목적으로 사용하는 콘솔 출력보다도 훨씬 다양하며 
+		//복잡한 기능을 지원하는 로그 라이브러리이다. 
+		//특히 출력 로그 레벨이라는 기능을 둬서, 개발자가 원하는 레벨을 선택하여 출력을 제어할 수 있도록 지원
+		// ALL(모든로깅) < DEBUG(확인) < INFO(강조) < WARN(경고) < ERROR(오류) < FATAL(심각한 오류) < OFF(로깅해제)
 		
-		System.out.println(""+dept.getDeptno());
-		System.out.println(dept.getDname());
-		System.out.println(dept.getLoc());
+		//WARN 수준으로 세팅
+		logger.debug(""+dept.getDeptno());
+		logger.debug(dept.getDname());
+		logger.debug(dept.getLoc());
 		
-		System.out.println(""+emp.getEmpno());
-		System.out.println(emp.getEname());
-		System.out.println(""+emp.getSal());
+		logger.info(""+emp.getEmpno());
+		logger.debug(emp.getEname());
+		logger.debug(""+emp.getSal());
+		
 		//System.out.println(""+emp.getDept().getDeptno());
 		
 		//DB에 등록!!!
@@ -45,12 +55,31 @@ public class EmpController {
 		//서비스에게 사원등록 요청!!!
 		emp.setDept(dept); //emp와 부서를 합체!!!
 		
-		int result = empService.regist(emp);
-		System.out.println("등록결과 "+result);
+		//int result = empService.regist(emp);
+		//logger.debug("등록결과 "+result);
 		
 		return null;
 	}
+	
+	//사원목록
+	@RequestMapping(value="/emp/list", method=RequestMethod.GET)
+	public ModelAndView selectAll() {
+		ModelAndView mav = new ModelAndView();
+		
+		
+		return mav;
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

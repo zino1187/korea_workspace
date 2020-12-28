@@ -28,7 +28,7 @@ public class JdbcEmpDAO {
 	public int regist(Emp emp) throws SQLException{
 		int result=0;
 		PreparedStatement pstmt=null;
-		String sql="insert into e(empno, ename, sal, deptno) values(?,?,?,?)";
+		String sql="insert into emp(empno, ename, sal, deptno) values(?,?,?,?)";
 	
 		try {
 			pstmt=con.prepareStatement(sql);
