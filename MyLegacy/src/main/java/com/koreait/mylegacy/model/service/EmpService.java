@@ -55,6 +55,7 @@ public class EmpService {
 			jdbcDeptDAO.regist(emp.getDept());//부서등록
 			jdbcEmpDAO.regist(emp);//사원등록 
 			con.commit(); //위 두개의 insert 업무수행중 에러가 없다면 트랜잭션 커밋 
+			result=1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {

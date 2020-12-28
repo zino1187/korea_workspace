@@ -37,7 +37,7 @@ public class EmpController {
 		System.out.println(""+emp.getEmpno());
 		System.out.println(emp.getEname());
 		System.out.println(""+emp.getSal());
-		System.out.println(""+emp.getDeptno());
+		//System.out.println(""+emp.getDept().getDeptno());
 		
 		//DB에 등록!!!
 		//부서등록과 사원등록이라는 두개의 업무가 모두 성공되어야, 전체를 성공으로 간주하는 트랜잭션 상황!!!
@@ -45,7 +45,8 @@ public class EmpController {
 		//서비스에게 사원등록 요청!!!
 		emp.setDept(dept); //emp와 부서를 합체!!!
 		
-		empService.regist(emp);
+		int result = empService.regist(emp);
+		System.out.println("등록결과 "+result);
 		
 		return null;
 	}

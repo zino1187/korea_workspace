@@ -27,9 +27,8 @@ public class JdbcDeptDAO {
 		Dept dept = null;
 		return dept;
 	}
-	public int regist(Dept dept) {
+	public int regist(Dept dept) throws SQLException{
 		int result=0;
-		Connection con=null; 
 		PreparedStatement pstmt=null;
 		String sql="insert into dept(deptno, dname, loc) values(?,?,?)";
 		
@@ -41,8 +40,6 @@ public class JdbcDeptDAO {
 			
 			result=pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}finally{
 			if(pstmt!=null) {
 				try {
