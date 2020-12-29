@@ -24,6 +24,7 @@ public class AdminController {
 	@RequestMapping(value="/main", method=RequestMethod.GET)
 	public String test() {
 		logger.debug("test() 메서드 호출");
+		logger.debug("어드민에서 사용중인 MemberService의 주소값 "+memberService);
 		memberService.regist();
 		
 		return null;

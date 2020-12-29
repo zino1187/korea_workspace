@@ -24,6 +24,7 @@ public class ClientController {
 	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public String test() {
 		logger.debug("test() 메서드 호출");
+		logger.debug("클라이언트에서 사용중인 MemberService의 주소값 "+memberService);
 		memberService.regist();
 		
 		return null;
