@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.mvclegacy.exception.DMLException;
 import com.koreait.mvclegacy.model.domain.Notice;
 
 @Service
@@ -26,7 +27,7 @@ public class NoticeService {
 	public void insert(Notice notice) {
 		noticeDAO.insert(notice);
 	}
-	public void update(Notice notice) {
+	public void update(Notice notice) throws DMLException{
 		noticeDAO.update(notice);
 	}
 	public void delete(int notice_id) {

@@ -1,4 +1,9 @@
+<%@page import="com.koreait.mvclegacy.model.domain.Notice"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=utf-8"%>
+<%
+	List<Notice> noticeList= (List)request.getAttribute("noticeList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,33 +30,29 @@ tr:nth-child(even) {
 
 	<table>
 		<tr>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Points</th>
+			<th>No</th>
+			<th>title</th>
+			<th>writer</th>
+			<th>regdate</th>
+			<th>hit</th>
 		</tr>
+		<%for(Notice notice : noticeList){%>
 		<tr>
-			<td>Jill</td>
-			<td>Smith</td>
-			<td>50</td>
+			<td>1</td>
+			<td><a href="/client/notice/detail?notice_id=<%=notice.getNotice_id()%>"><%=notice.getTitle() %></a></td>
+			<td><%=notice.getWriter() %></td>
+			<td><%=notice.getRegdate() %></td>
+			<td><%=notice.getHit() %></td>
 		</tr>
+		<%} %>
 		<tr>
-			<td>Eve</td>
-			<td>Jackson</td>
-			<td>94</td>
-		</tr>
-		<tr>
-			<td>Adam</td>
-			<td>Johnson</td>
-			<td>67</td>
-		</tr>
-		<tr>
-			<td colspan="3" style="text-align:center">
+			<td colspan="5" style="text-align:center">
 				[1][2][3]
 			</td>
 		</tr>
 		<tr>
-			<td colspan="3">
-				<button onClick="location.href='/board/regist_form.jsp'"> 글등록</button>
+			<td colspan="5">
+				<button onClick="location.href='/client/notice/registform'"> 글등록</button>
 			</td>
 		</tr>
 	</table>

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.koreait.mvclegacy.exception.DMLException;
 import com.koreait.mvclegacy.model.domain.Notice;
 
 @Repository
@@ -29,11 +30,15 @@ public class NoticeDAO {
 		return notice;
 	}
 	
-	public void insert(Notice notice) {
+	public void insert(Notice notice){
 		sessionTemplate.insert("Notice.insert", notice);
 	}
-	public void update(Notice notice) {
-		sessionTemplate.update("Notice.update", notice);
+	public void update(Notice notice) throws DMLException{
+		int result = sessionTemplate.update("Notice.update", notice);
+		result=0;//억지로..대입
+		if(result==0) {//수정실패
+			throw new DMLException("수정작업에 실패하였습니다");
+		}
 	}
 	public void delete(int notice_id) {
 		sessionTemplate.delete("Notice.delete", notice_id);
