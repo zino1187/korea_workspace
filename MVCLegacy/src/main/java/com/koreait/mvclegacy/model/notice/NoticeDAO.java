@@ -25,18 +25,19 @@ public class NoticeDAO {
 	
 	public Notice select(int notice_id) {
 		Notice notice = null;
+		notice = sessionTemplate.selectOne("Notice.select", notice_id);
 		return notice;
 	}
+	
 	public void insert(Notice notice) {
-		
+		sessionTemplate.insert("Notice.insert", notice);
 	}
 	public void update(Notice notice) {
-		
+		sessionTemplate.update("Notice.update", notice);
 	}
 	public void delete(int notice_id) {
-		
+		sessionTemplate.delete("Notice.delete", notice_id);
 	}
-	
 }
 
 
