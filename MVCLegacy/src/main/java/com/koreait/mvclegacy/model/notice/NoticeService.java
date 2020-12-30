@@ -27,13 +27,13 @@ public class NoticeService {
 		return notice;
 	}
 	
-	public void insert(Notice notice) {
+	public void insert(Notice notice) throws DMLException{
 		noticeDAO.insert(notice);
 	}
 	public void update(Notice notice) throws DMLException{
 		noticeDAO.update(notice);
 	}
-	public void delete(int notice_id) {
+	public void delete(int notice_id) throws DMLException {
 		noticeDAO.delete(notice_id);
 	}	
 	
