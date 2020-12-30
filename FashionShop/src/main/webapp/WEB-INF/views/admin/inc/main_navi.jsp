@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <div class="navbar">
-  <a href="#home">Home</a>
+  <a href="/admin">Home</a>
   <a href="/admin/product/list">상품관리</a>
   <div class="dropdown">
     <button class="dropbtn">주문관리 
