@@ -3,6 +3,7 @@ package com.koreait.mvclegacy.model.notice;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.koreait.mvclegacy.exception.DMLException;
@@ -10,8 +11,10 @@ import com.koreait.mvclegacy.model.domain.Notice;
 
 @Service
 public class NoticeService {
-	@Autowired
-	private NoticeDAO noticeDAO;
+	//주입시키려 하는 자료형이 2개 이상을 경우, 개발자는 무엇을 사용할지 원하는 객체를 명시해야 한다..
+	@Autowired 
+	@Qualifier("jdbcNoticeDAO")
+	private NoticeDAO noticeDAO; //DI로 주입받기 위해서 상위 객체를 보유한다
 	
 	//CRUD method 
 	public List selectAll() {
