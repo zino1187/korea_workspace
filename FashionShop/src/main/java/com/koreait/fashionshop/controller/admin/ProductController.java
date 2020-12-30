@@ -11,6 +11,7 @@ public class ProductController {
 	
 	//상위카테고리 가져오기 
 	
+	
 	//하위카테고리 가져오기 
 	
 	//상품목록
@@ -19,6 +20,14 @@ public class ProductController {
 		ModelAndView mav = new ModelAndView("admin/product/product_list");
 		return mav;
 	}
+	
+	//상품등록 폼 
+	@RequestMapping(value="/admin/product/registform")
+	public String registForm() {
+		
+		return "admin/product/regist_form";
+	}
+	
 	
 	//상품 상세 
 	
