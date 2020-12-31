@@ -118,12 +118,12 @@ function regist(){
 	
 	<!-- 지원 사이즈 선택  -->
 	<p>
-		XS<input type="checkbox">
-		S<input type="checkbox">
-		M<input type="checkbox">
-		L<input type="checkbox">
-		XL<input type="checkbox">
-		XXL<input type="checkbox">
+		XS<input type="checkbox" 		name="fit" value="XS">
+		S<input type="checkbox" 		name="fit" value="S">
+		M<input type="checkbox" 		name="fit" value="M">
+		L<input type="checkbox" 		name="fit" value="L">
+		XL<input type="checkbox" 		name="fit" value="XL">
+		XXL<input type="checkbox" 	name="fit" value="XXL">
 	</p>
 	
 	<p>

@@ -109,7 +109,12 @@ public class ProductController {
 		logger.debug("가격 "+product.getPrice());
 		logger.debug("브랜드 "+product.getBrand());
 		logger.debug("상세내용 "+product.getDetail());
-		logger.debug("업로드 이미지명 "+product.getRepImg().getOriginalFilename());
+		logger.debug("업로드 이미지명 "+product.getRepImg()[0].getOriginalFilename());
+		
+		for(int i=0;i<product.getFit().length;i++) {
+			String fit = product.getFit()[i];
+			logger.debug("지원 사이즈는  "+fit);
+		}
 		
 		return "redirect:/admin/product/list";
 	}
