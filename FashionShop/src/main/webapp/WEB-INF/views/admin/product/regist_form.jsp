@@ -44,8 +44,22 @@ input[type=button]:hover {
 $(function(){
 	CKEDITOR.replace("detail");	
 	
+	//상위카테고리 선택하면..
+	$($("select")[0]).change(function(){
+		//비동기 방식으로 서버에 요청하되, 순수 ajax보다는 jquery ajax 를 이용하자!!
+		getSubList();
+	});
 });
-
+//비동기 방식으로 하위 카테고리 요청하기!!
+function getSubList(){
+	$.ajax({
+		url:"/admin/product/sublist", 
+		type:"get",
+		success:function(result){
+			alert("서버로 부터 받은 결과는 "+result);
+		}
+	});
+}
 </script>
 </head>
 <body>

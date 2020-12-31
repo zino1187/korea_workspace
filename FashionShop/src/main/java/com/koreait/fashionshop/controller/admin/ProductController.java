@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
@@ -31,10 +32,17 @@ public class ProductController {
 	}
 	
 	
-	//하위카테고리 가져오기 
+	//하위카테고리 가져오기
+	@RequestMapping(value="/admin/product/sublist", method=RequestMethod.GET)
+	@ResponseBody //jsp와 같은 뷰페이지가 아닌, 단순 데이터만 전송시...
+	public String getSubList() {
+		return "ha ha ha";
+	}
+ 
+
 	
 	//상품목록
-	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET )
 	public ModelAndView getProductList() {
 		ModelAndView mav = new ModelAndView("admin/product/product_list");
 		return mav;
