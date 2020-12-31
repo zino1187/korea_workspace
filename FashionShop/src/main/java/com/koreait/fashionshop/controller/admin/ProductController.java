@@ -2,6 +2,8 @@ package com.koreait.fashionshop.controller.admin;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +11,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.koreait.fashionshop.model.domain.SubCategory;
+import com.koreait.fashionshop.model.product.service.SubCategoryService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
 //관리자 모드에서의 상품에 대한 요청 처리
 @Controller
 public class ProductController {
+	private static final Logger logger=LoggerFactory.getLogger(ProductController.class);
+	
 	@Autowired
 	private TopCategoryService topCategoryService;
+	
+	@Autowired
+	private SubCategoryService subCategoryService;
+	
 	
 	//상위카테고리 가져오기 
 	@RequestMapping(value="/admin/product/registform", method=RequestMethod.GET)
@@ -33,10 +43,33 @@ public class ProductController {
 	
 	
 	//하위카테고리 가져오기
-	@RequestMapping(value="/admin/product/sublist", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/product/sublist", method=RequestMethod.GET, produces ="application/json;charset=utf8")
 	@ResponseBody //jsp와 같은 뷰페이지가 아닌, 단순 데이터만 전송시...
-	public String getSubList() {
-		return "ha ha ha";
+	public String getSubList(int topcategory_id) {
+		logger.debug("tocategory_id : "+topcategory_id);
+		
+		List<SubCategory> subList = subCategoryService.selectAllById(topcategory_id);
+		
+		// 리스트를 json으로 변형하여 보내줘야함..
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"subList\" : [");
+		for(int i=0;i<subList.size();i++) {
+			SubCategory subCategory = subList.get(i);
+			sb.append("{");
+			sb.append("\"subcategory_id\":"+subCategory.getSubcategory_id()+" ,");
+			sb.append("\"topcategory_id\":"+subCategory.getTopcategory_id()+",");
+			sb.append("\"name\":\""+subCategory.getName()+"\"");
+			if(i<subList.size()-1) {
+				sb.append("},");
+			}else {
+				sb.append("}");
+			}
+		}
+		sb.append("]");
+		sb.append("}");		
+		
+		return sb.toString();
 	}
  
 
