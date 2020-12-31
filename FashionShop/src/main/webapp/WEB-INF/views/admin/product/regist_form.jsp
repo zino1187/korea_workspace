@@ -1,4 +1,9 @@
+<%@page import="com.koreait.fashionshop.model.domain.TopCategory"%>
+<%@page import="java.util.List"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+	List<TopCategory> topList = (List)request.getAttribute("topList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,9 +54,14 @@ $(function(){
 <h3>Contact Form</h3>
 <div class="container">
   <form>
+  	
   	<select>
   		<option>상위카테고리 선택</option>
+  		<%for(TopCategory topCategory : topList){%>
+  		<option><%=topCategory.getName() %></option>
+  		<%} %>
   	</select>
+  	
   	<select>
   		<option>하위카테고리 선택</option>
   	</select>
