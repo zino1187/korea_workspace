@@ -102,19 +102,19 @@ function regist(){
   		<%} %>
   	</select>
   	
-  	<select>
+  	<select name="subcategory_id">
   		<option>하위카테고리 선택</option>
   	</select>
-    <input type="text" name="title" placeholder="상품명">
-    <input type="text" name="writer" placeholder="가격">
-    <input type="text" name="writer" placeholder="브랜드">
+    <input type="text" name="product_name" placeholder="상품명">
+    <input type="text" name="price" placeholder="가격">
+    <input type="text" name="brand" placeholder="브랜드">
 	<!-- 파일 최대 4개까지 지원 -->
-	<p>대표이미지: <input type="file" ></p>
+	<p>대표이미지: <input type="file"  name="repImg"></p>
 	
-	<p>추가이미지: <input type="file" ></p>
-	<p>추가이미지: <input type="file" ></p>
-	<p>추가이미지: <input type="file" ></p>
-	<p>추가이미지: <input type="file" ></p>
+	<p>추가이미지: <input type="file" name="addOn"></p>
+	<p>추가이미지: <input type="file" name="addOn" ></p>
+	<p>추가이미지: <input type="file" name="addOn" ></p>
+	<p>추가이미지: <input type="file" name="addOn" ></p>
 	
 	<!-- 지원 사이즈 선택  -->
 	<p>

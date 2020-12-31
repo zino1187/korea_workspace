@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.SubCategory;
 import com.koreait.fashionshop.model.product.service.SubCategoryService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
@@ -101,7 +102,14 @@ public class ProductController {
 	//상품 상세 
 	
 	//상품 등록 
-	public String registProduct() {
+	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST)
+	public String registProduct(Product product) {
+		logger.debug("하위카테고리 "+product.getSubcategory_id());
+		logger.debug("상품명 "+product.getProduct_name());
+		logger.debug("가격 "+product.getPrice());
+		logger.debug("브랜드 "+product.getBrand());
+		logger.debug("상세내용 "+product.getDetail());
+		logger.debug("업로드 이미지명 "+product.getRepImg().getOriginalFilename());
 		
 		return "redirect:/admin/product/list";
 	}
