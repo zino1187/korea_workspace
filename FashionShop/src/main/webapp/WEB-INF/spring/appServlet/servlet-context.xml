@@ -12,9 +12,7 @@
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 	
-	
-	
-	<!-- json 컨버터 등록 -->
+	<!-- json 컨버터 등록 !! -->
 	<beans:bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<beans:property name="messageConverters">
 			<beans:list value-type="java.util.ArrayList">
