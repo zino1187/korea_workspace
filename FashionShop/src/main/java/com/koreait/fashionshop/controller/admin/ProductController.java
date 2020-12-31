@@ -43,6 +43,15 @@ public class ProductController {
 	
 	
 	//하위카테고리 가져오기
+	//스프링에서는 java객체와 Json간 변환(converting)을 자동으로 처리해주는 라이브러리를 지원한다
+	@RequestMapping(value="/admin/product/sublist", method=RequestMethod.GET)
+	@ResponseBody
+	public List getSubList(int topcategory_id) {
+		List<SubCategory> subList = subCategoryService.selectAllById(topcategory_id);
+		return subList;
+	}
+	
+	/*
 	@RequestMapping(value="/admin/product/sublist", method=RequestMethod.GET, produces ="application/json;charset=utf8")
 	@ResponseBody //jsp와 같은 뷰페이지가 아닌, 단순 데이터만 전송시...
 	public String getSubList(int topcategory_id) {
@@ -71,7 +80,7 @@ public class ProductController {
 		
 		return sb.toString();
 	}
- 
+	 */
 
 	
 	//상품목록
@@ -92,6 +101,10 @@ public class ProductController {
 	//상품 상세 
 	
 	//상품 등록 
+	public String registProduct() {
+		
+		return "redirect:/admin/product/list";
+	}
 	
 	//상품 수정
 	

@@ -62,18 +62,30 @@ function getSubList(obj){
 		},
 		success:function(result){
 			//alert("서버로 부터 받은 결과는 "+result);
+			
 			//서버가 이미  json 으로 전송해주었으므로 별도의  parsing이 필요없다!!
 			//기존 option태그를 먼저 지우자!!
 			$($("select")[1]).empty();
 			$($("select")[1]).append("<option>하위카테고리 선택</option>");
 			
-			for(var i=0;i<result.subList.length;i++){
-				var subCategory = result.subList[i]; //subcategory 1건에 대한 json 객체얻기!!
+			for(var i=0;i<result.length;i++){
+				var subCategory = result[i]; //subcategory 1건에 대한 json 객체얻기!!
 				$($("select")[1]).append("<option value=\""+subCategory.subcategory_id+"\">"+subCategory.name+"</option>");
 			}
 		}
 	});
 }
+
+//상품 등록
+function regist(){
+	$("form").attr({
+		action:"/admin/product/regist",
+		method:"post",
+		enctype:"multipart/form-data"
+	});	
+	$("form").submit();
+}
+
 </script>
 </head>
 <body>
