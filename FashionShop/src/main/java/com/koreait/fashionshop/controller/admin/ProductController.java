@@ -1,5 +1,7 @@
 package com.koreait.fashionshop.controller.admin;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.koreait.fashionshop.common.FileManager;
 import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.SubCategory;
+import com.koreait.fashionshop.model.product.service.ProductService;
 import com.koreait.fashionshop.model.product.service.SubCategoryService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
@@ -27,6 +31,11 @@ public class ProductController {
 	@Autowired
 	private SubCategoryService subCategoryService;
 	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private FileManager fileManager;
 	
 	//상위카테고리 가져오기 
 	@RequestMapping(value="/admin/product/registform", method=RequestMethod.GET)
@@ -109,12 +118,33 @@ public class ProductController {
 		logger.debug("가격 "+product.getPrice());
 		logger.debug("브랜드 "+product.getBrand());
 		logger.debug("상세내용 "+product.getDetail());
-		logger.debug("업로드 이미지명 "+product.getRepImg()[0].getOriginalFilename());
+		logger.debug("업로드 이미지명 "+product.getRepImg().getOriginalFilename());
 		
 		for(int i=0;i<product.getFit().length;i++) {
 			String fit = product.getFit()[i];
 			logger.debug("지원 사이즈는  "+fit);
 		}
+		
+		
+		//대표이미지 업로드(현재 날짜로 처리)
+		//어떤 파일명으로, 어디에 저장할지 결정
+		long time = System.currentTimeMillis();
+		
+		//확장자 얻기
+		String ext = fileManager.getExtend(product.getRepImg().getOriginalFilename());
+		String filename=time+"."+ext;
+		try {
+			product.getRepImg().transferTo(new File(fileManager.getSaveDir()+"/"+filename));
+			logger.debug(filename);
+			
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//db에 넣기 
+		productService.regist(product);
 		
 		return "redirect:/admin/product/list";
 	}

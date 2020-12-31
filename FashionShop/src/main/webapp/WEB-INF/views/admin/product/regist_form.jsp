@@ -111,10 +111,10 @@ function regist(){
 	<!-- 파일 최대 4개까지 지원 -->
 	<p>대표이미지: <input type="file"  name="repImg"></p>
 	
-	<p>추가이미지: <input type="file" name="repImg"></p>
-	<p>추가이미지: <input type="file" name="repImg" ></p>
-	<p>추가이미지: <input type="file" name="repImg" ></p>
-	<p>추가이미지: <input type="file" name="repImg" ></p>
+	<p>추가이미지: <input type="file" name="addImg"></p>
+	<p>추가이미지: <input type="file" name="addImg" ></p>
+	<p>추가이미지: <input type="file" name="addImg" ></p>
+	<p>추가이미지: <input type="file" name="addImg" ></p>
 	
 	<!-- 지원 사이즈 선택  -->
 	<p>
