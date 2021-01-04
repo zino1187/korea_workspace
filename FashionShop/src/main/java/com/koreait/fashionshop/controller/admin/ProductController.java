@@ -143,24 +143,8 @@ public class ProductController implements ServletContextAware{
 			logger.debug(product.getAddImg()[i].getOriginalFilename());
 		}
 		*/
-		logger.debug("insert하기 전 상품의 product_id "+product.getProduct_id());
-		productService.regist(product); //상품등록
-		logger.debug("방금 insert된 상품의 product_id "+product.getProduct_id());
 		
-		//상품의 product_id 를 이용하여, 대표이미지명을 결정짓자!!
-		String basicImg = product.getProduct_id()+"."+fileManager.getExtend(product.getRepImg().getOriginalFilename());
-		
-		//파일명이 생성되었으면, 이제 저장을 해보자!!
-		//실제 물리적 경로를 얻어오려면, servletContext가 보유한 getRealPath()  메서드가 필요하다..
-		try {
-			product.getRepImg().transferTo(new File(fileManager.getSaveBasicDir()+File.separator+basicImg)); //저장
-			
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		productService.regist(fileManager, product); //상품등록 서비스에게 요청
 		
 		/*
 		for(int i=0;i<product.getFit().length;i++) {

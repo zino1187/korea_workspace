@@ -1,6 +1,7 @@
 package com.koreait.fashionshop.common;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,13 @@ public class FileManager {
 	
 	//파일 저장하기
 	public void saveFile(String realDir , MultipartFile multi) {
-		
+		try {
+			multi.transferTo(new File(realDir));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
