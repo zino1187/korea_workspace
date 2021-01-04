@@ -39,8 +39,34 @@ input[type=button]:hover {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+/*드래드 관련 */
+#dragArea{
+	width:100%;
+	height:300px;
+	overflow:scroll;
+	border:1px solid #ccc;
+}
+.dragBorder{
+	background:#ffffff;
+}
+
+.box{
+	width:100px;
+	float:left;
+	padding:5px;
+}
+.box > img{
+	width:100%; 
+}
+.close{
+	color:red;
+	cursor:pointer;
+}
 </style>
 <script type="text/javascript">
+var uploadFiles=[]; //미리보기 이미지 목록 
+
 $(function(){
 	CKEDITOR.replace("detail");	
 	
@@ -49,7 +75,76 @@ $(function(){
 		//비동기 방식으로 서버에 요청하되, 순수 ajax보다는 jquery ajax 를 이용하자!!
 		getSubList(this);
 	});
+	
+	/*드래그 관련 이벤트 */
+	
+	$("#dragArea").on("dragenter", function(e){ //드래그로 영역에 진입했을때...
+		$(this).append("dragenter<br>");
+		$(this).addClass("dragBorder");
+	});
+	
+	$("#dragArea").on("dragover", function(e){ //드래그영역 위에 있는 동안...
+		//$(this).append("dragover<br>");
+		e.preventDefault();
+	});
+	
+	$("#dragArea").on("drop", function(e){ //드래그영역 위에서 이미지를 떨구면..
+		e.preventDefault(); //여타 다른 이벤트를 비활성화시키자...
+		$(this).append("drop<br>");
+		
+		//자바스크립트로 드래그된 이미지 정보를 구해와서, div영역에 미리보기 효과..
+		uploadFiles = e.originalEvent.dataTransfer.files; //드래그한 파일들에 대한 배열 얻기!!
+		console.log(uploadFiles);
+		
+		//배열안에 들어있는 이미지들에 대한 미리보기처리...
+		for(var i=0;i<uploadFiles.length;i++){
+			preview(uploadFiles[i], i); //파일 요소 하나를 넘기기
+		}
+	});
+	
+	$("#dragArea").on("dragleave", function(e){ //드래그 영역에서 빠져나가면
+		$(this).append("dragleave<br>");
+		$(this).removeClass("dragBorder");
+	});
+	
+	//이미지 삭제 이벤트 처리 
+	$("#dragArea").on("click", ".close", function(e){
+		console.log(e);
+		
+		//대상 요소 배열에서 삭제
+		//삭제전에 uploadFiles 라는 배열에 들어있는 file의 index를 구하자!!
+		var f = uploadFiles[e.target.id];
+		var index = uploadFiles.indexOf(f); //파일 객체가 몇번째 들어있는지 추출
+		
+		//alert(e.target.id+"클릭햇어?");
+		uploadFiles.splice(index ,1);
+		
+		//대상 요소 삭제 (시각적으로 삭제)
+		$(e.target).parent().remove();
+	});
 });
+
+//업로드 이미지 미리보기
+function preview(file, index){
+	//js로 이미지 미리보기를 구현하려면, 파일리더를 이용하면 된다 FileReader
+	var reader = new FileReader(); //아직은 읽을 대상 파일이 결정되지 않음..
+	//파일일 읽어들이면, 이벤트 발생시킴 
+	reader.onload=function(e){
+		console.log(e.currentTarget.result);
+		
+		var tag="<div class=\"box\">";
+		tag+="<div class=\"close\" id=\""+index+"\">X</div>";
+		tag+="<img src=\""+e.currentTarget.result+"\">";
+		tag+="</div>";
+		
+		$("#dragArea").append(tag);
+		
+	};
+	
+	reader.readAsDataURL(file); //지정한 파일을 읽는다(매개변수로는 파일이 와야함)
+}
+
+
 //비동기 방식으로 하위 카테고리 요청하기!!
 function getSubList(obj){
 	//alert($(obj).val());
@@ -111,11 +206,7 @@ function regist(){
 	<!-- 파일 최대 4개까지 지원 -->
 	<p>대표이미지: <input type="file"  name="repImg"></p>
 	
-	<p>추가이미지: <input type="file" name="addImg"></p>
-	<p>추가이미지: <input type="file" name="addImg" ></p>
-	<p>추가이미지: <input type="file" name="addImg" ></p>
-	<p>추가이미지: <input type="file" name="addImg" ></p>
-	
+	<div id="dragArea"></div>
 	<!-- 지원 사이즈 선택  -->
 	<p>
 		XS<input type="checkbox" 		name="fit" value="XS">
