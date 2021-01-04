@@ -176,7 +176,6 @@ function getSubList(obj){
 //상품 등록
 function regist(){
 	/*비동기 전송시, 기존의 form을 이용할수 있을까?  yes!!*/
-	//$("textarea").val(CKEDITOR.instances.detail.getData());
 	
 	var formData = new FormData($("form")[0]);//<form>태그와는 틀리다..전송할때 파라미터들을 담을수있지만 이 자체가
 													//폼태그는 아니다!!
@@ -189,6 +188,8 @@ function regist(){
 		console.log(file.name);
 	});	
 	
+	//폼데이터에 에디터의 값 추가하기!! 
+	formData.append("detail", CKEDITOR.instances["detail"].getData());
 	
 	/*비동기 업로드*/
 	$.ajax({
