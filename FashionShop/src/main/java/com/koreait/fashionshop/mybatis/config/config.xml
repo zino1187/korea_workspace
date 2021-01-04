@@ -7,11 +7,13 @@
 		<typeAlias type="com.koreait.fashionshop.model.domain.TopCategory" 	alias="TopCategory"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.SubCategory" 	alias="SubCategory"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.Product" 			alias="Product"/>		
+		<typeAlias type="com.koreait.fashionshop.model.domain.Image" 			alias="Image"/>		
 	</typeAliases>
 	<mappers>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/TopCategoryMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/SubCategoryMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/ProductMapper.xml"/>
+		<mapper resource="com/koreait/fashionshop/mybatis/mapper/ImageMapper.xml"/>
 	</mappers>
 	
 </configuration>
