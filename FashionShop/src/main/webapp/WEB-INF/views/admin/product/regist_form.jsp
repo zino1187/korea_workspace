@@ -66,6 +66,7 @@ input[type=button]:hover {
 </style>
 <script type="text/javascript">
 var uploadFiles=[]; //미리보기 이미지 목록 
+var psizeArray=[] ; //유저가 선택한 사이즈를 담는 배열 
 
 $(function(){
 	CKEDITOR.replace("detail");	
@@ -124,6 +125,15 @@ $(function(){
 		//대상 요소 삭제 (시각적으로 삭제)
 		$(e.target).parent().remove();
 	});
+	
+	
+	//체크박스 이벤트 구현 
+	$("input[type='checkbox']").on("click", function(e){
+		var ch = e.target;//이벤트 일으킨 주체컴포넌트 즉 체크박스
+		alert($(ch).val());
+		
+	});
+	
 });
 
 //업로드 이미지 미리보기
@@ -171,6 +181,12 @@ function getSubList(obj){
 			}
 		}
 	});
+}
+
+//사이즈 선택시 배열 재구성하기
+function setPsizeArray(){
+	
+	
 }
 
 //상품 등록

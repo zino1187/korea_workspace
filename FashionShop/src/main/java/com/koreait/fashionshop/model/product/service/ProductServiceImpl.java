@@ -88,15 +88,15 @@ public class ProductServiceImpl implements ProductService{
 		//사이즈
 		for(Psize psize : product.getPsize()) {
 			logger.debug("당신이 선택한 사이즈는 "+psize.getFit());
-			psize.setProduct_id(product.getProduct_id());//fk 대입
-			psizeDAO.insert(psize);
+			//psize.setProduct_id(product.getProduct_id());//fk 대입
+			//psizeDAO.insert(psize);
 		}
 		
 		//색상 
 		for(Color color : product.getColor()){
 			logger.debug("넘겨받은 색상은 "+color.getPicker());
-			color.setProduct_id(product.getProduct_id());
-			colorDAO.insert(color);
+			//color.setProduct_id(product.getProduct_id());
+			//colorDAO.insert(color);
 		}
 		
 	}
