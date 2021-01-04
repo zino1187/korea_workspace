@@ -240,21 +240,21 @@ function regist(){
 	<div id="dragArea"></div>
 	<!-- 지원 사이즈 선택  -->
 	<p>
-		XS<input type="checkbox" 	name="fit" value="XS">
-		S<input type="checkbox" 		name="fit" value="S">
-		M<input type="checkbox" 		name="fit" value="M">
-		L<input type="checkbox" 		name="fit" value="L">
-		XL<input type="checkbox" 	name="fit" value="XL">
-		XXL<input type="checkbox" 	name="fit" value="XXL">
+		XS<input type="checkbox" 	name="psize[0].fit" value="XS">
+		S<input type="checkbox" 		name="psize[1].fit" value="S">
+		M<input type="checkbox" 		name="psize[2].fit" value="M">
+		L<input type="checkbox" 		name="psize[3].fit" value="L">
+		XL<input type="checkbox" 	name="psize[4].fit" value="XL">
+		XXL<input type="checkbox" 	name="psize[5].fit" value="XXL">
 	</p>
 	
 	<p>
-		<input type="color" name="color" value="#ccfefe">
-		<input type="color" name="color" value="#ffffff">
-		<input type="color" name="color" value="#000000">
-		<input type="color" name="color" value="#fdfdfd">
-		<input type="color" name="color" value="#0000ff">
-		<input type="color" name="color" value="#ff0000">
+		<input type="color" name="color[0].picker" value="#ccfefe">
+		<input type="color" name="color[1].picker" value="#ffffff">
+		<input type="color" name="color[2].picker" value="#000000">
+		<input type="color" name="color[3].picker" value="#fdfdfd">
+		<input type="color" name="color[4].picker" value="#0000ff">
+		<input type="color" name="color[5].picker" value="#ff0000">
 	</p>	
     
     <textarea id="detail" name="detail" placeholder="상세정보.." style="height:200px"></textarea>
