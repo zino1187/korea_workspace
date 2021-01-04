@@ -123,33 +123,13 @@ public class ProductController {
 			logger.debug(product.getAddImg()[i].getOriginalFilename());
 		}
 		
+		productService.regist(product); //상품등록
 		
 		/*
 		for(int i=0;i<product.getFit().length;i++) {
 			String fit = product.getFit()[i];
 			logger.debug("지원 사이즈는  "+fit);
 		}
-		
-		
-		//대표이미지 업로드(현재 날짜로 처리)
-		//어떤 파일명으로, 어디에 저장할지 결정
-		long time = System.currentTimeMillis();
-		
-		//확장자 얻기
-		String ext = fileManager.getExtend(product.getRepImg().getOriginalFilename());
-		String filename=time+"."+ext;
-		try {
-			product.getRepImg().transferTo(new File(fileManager.getSaveDir()+"/"+filename));
-			logger.debug(filename);
-			
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		//db에 넣기 
-		productService.regist(product);
 		*/
 		return "haahahah";
 	}
