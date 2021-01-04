@@ -10,8 +10,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.koreait.fashionshop.common.FileManager;
 import com.koreait.fashionshop.model.domain.Image;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.product.repository.ColorDAO;
 import com.koreait.fashionshop.model.product.repository.ImageDAO;
 import com.koreait.fashionshop.model.product.repository.ProductDAO;
+import com.koreait.fashionshop.model.product.repository.PsizeDAO;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -20,6 +22,12 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
 	private ImageDAO imageDAO;
+	
+	@Autowired
+	private PsizeDAO psizeDAO;
+	
+	@Autowired
+	private ColorDAO colorDAO;
 	
 	@Override
 	public List selectAll() {
@@ -68,6 +76,8 @@ public class ProductServiceImpl implements ProductService{
 			String addImg = image.getImage_id()+"."+ext;
 			fileManager.saveFile(fileManager.getSaveAddonDir()+File.separator+addImg, file);
 		}
+		
+		//기타 옵션 중, 색상 사이즈 넣기 (반복문으로...)
 		
 		
 	}
