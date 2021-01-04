@@ -93,11 +93,13 @@ $(function(){
 		$(this).append("drop<br>");
 		
 		//자바스크립트로 드래그된 이미지 정보를 구해와서, div영역에 미리보기 효과..
-		uploadFiles = e.originalEvent.dataTransfer.files; //드래그한 파일들에 대한 배열 얻기!!
-		console.log(uploadFiles);
+		var fileList = e.originalEvent.dataTransfer.files; //드래그한 파일들에 대한 배열 얻기!!
+		console.log(fileList);
 		
 		//배열안에 들어있는 이미지들에 대한 미리보기처리...
-		for(var i=0;i<uploadFiles.length;i++){
+		for(var i=0;i<fileList.length;i++){
+			uploadFiles.push(fileList[i]); //fileList안의 요소들을 일반배열에 옮겨심기 
+			//왜 심었나? 배열이 지원하는 여러 메서드들을 활용하기 위해...(ex : indexOf..)
 			preview(uploadFiles[i], i); //파일 요소 하나를 넘기기
 		}
 	});
@@ -173,12 +175,38 @@ function getSubList(obj){
 
 //상품 등록
 function regist(){
+	/*비동기 전송시, 기존의 form을 이용할수 있을까?  yes!!*/
+	var formData = new FormData($("form")[0]);//<form>태그와는 틀리다..전송할때 파라미터들을 담을수있지만 이 자체가
+													//폼태그는 아니다!!
+	
+	//미리보기했떤 이미지들은 파일컴포넌트화 되어있지 않기 때문에 , 전송데이터에서 빠져잇다..
+	//따라서 formData전송 전에, 동적으로 파일컴포넌트화시켜 formData에 추가하자!!!
+	//java에서의 improved for문과 동일한 역할(주로 컬렉션에서 객체를 꺼낼때 편하게 사용..)
+	$.each(uploadFiles, function( i, file){
+		formData.append("addImg", file,  file.name); // <input type="file" name="addImg> 동일한 효과
+		console.log(file.name);
+	});	
+	
+	/*비동기 업로드*/
+	$.ajax({
+		url:"/admin/product/regist",
+		data:formData,
+		contentType:false, /* false일 경우 multipart/form-data*/
+		processData:false, /* false일 경우 query-string으로 전송하지 않음*/
+		type:"post",
+		success:function(result){
+			alert(result);
+		}
+	});
+	
+	/* 동기방식 업로드 	
 	$("form").attr({
 		action:"/admin/product/regist",
 		method:"post",
 		enctype:"multipart/form-data"
 	});	
 	$("form").submit();
+	*/
 }
 
 </script>
@@ -188,8 +216,8 @@ function regist(){
 
 <h3>Contact Form</h3>
 <div class="container">
-  <form>
-  	
+   <form>
+ 
   	<select>
   		<option>상위카테고리 선택</option>
   		<%for(TopCategory topCategory : topList){%>
@@ -209,16 +237,21 @@ function regist(){
 	<div id="dragArea"></div>
 	<!-- 지원 사이즈 선택  -->
 	<p>
-		XS<input type="checkbox" 		name="fit" value="XS">
+		XS<input type="checkbox" 	name="fit" value="XS">
 		S<input type="checkbox" 		name="fit" value="S">
 		M<input type="checkbox" 		name="fit" value="M">
 		L<input type="checkbox" 		name="fit" value="L">
-		XL<input type="checkbox" 		name="fit" value="XL">
+		XL<input type="checkbox" 	name="fit" value="XL">
 		XXL<input type="checkbox" 	name="fit" value="XXL">
 	</p>
 	
 	<p>
-		컬러 피커를 가져올 예정
+		<input type="color" name="color" value="#ccfefe">
+		<input type="color" name="color" value="#ffffff">
+		<input type="color" name="color" value="#000000">
+		<input type="color" name="color" value="#fdfdfd">
+		<input type="color" name="color" value="#0000ff">
+		<input type="color" name="color" value="#ff0000">
 	</p>	
     
     <textarea id="detail" name="detail" placeholder="상세정보.." style="height:200px"></textarea>
