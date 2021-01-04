@@ -5,6 +5,7 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -26,7 +27,20 @@ public class FileManager {
 		File file = new File(path);
 		return file.delete();
 	}
+	
+	//파일 저장하기
+	public void saveFile(String realDir , MultipartFile multi) {
+		
+	}
+	
 }
+
+
+
+
+
+
+
 
 
 
