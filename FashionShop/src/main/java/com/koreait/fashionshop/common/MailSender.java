@@ -11,11 +11,11 @@ import javax.mail.internet.MimeMessage;
 
 public class MailSender {
 	String host = "smtp.gmail.com";
-	String user = "나의계정@gmail.com";
+	String user = "zino1187@gmail.com";
 	String password = "cluscskqavlddxzu"; //크롬브라우저 보안에서 인증받은 비번넣기
 	Properties props = new Properties();
 	
-	public void send() {
+	public void send(String to, String title, String content) {
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", 465);
 		props.put("mail.smtp.auth", "true");
@@ -32,17 +32,14 @@ public class MailSender {
 			
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress("받는사람이메일"));
-			message.setSubject("보낼제목");
-			message.setContent("<h1>this is</h1> content", "text/html;charset=utf-8");
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			message.setSubject(title);//메일제목
+			message.setContent(content, "text/html;charset=utf-8");
 			
 			Transport.send(message);
 			System.out.println("Success Message Send");
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-	}
-	public static void main(String[] args) {
-		new MailService().send();
 	}
 }
