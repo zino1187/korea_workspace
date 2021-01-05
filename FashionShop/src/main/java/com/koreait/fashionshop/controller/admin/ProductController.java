@@ -1,7 +1,5 @@
 package com.koreait.fashionshop.controller.admin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -18,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.common.FileManager;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
 import com.koreait.fashionshop.model.product.service.ProductService;
 import com.koreait.fashionshop.model.product.service.SubCategoryService;
@@ -130,12 +129,17 @@ public class ProductController implements ServletContextAware{
 	//상품 등록 
 	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST)
 	@ResponseBody
-	public String registProduct(Product product) {
+	public String registProduct(Product product, String[] test) {
 		logger.debug("하위카테고리 "+product.getSubcategory_id());
 		logger.debug("상품명 "+product.getProduct_name());
 		logger.debug("가격 "+product.getPrice());
 		logger.debug("브랜드 "+product.getBrand());
 		logger.debug("상세내용 "+product.getDetail());
+		
+		for(Psize psize : product.getPsize()) {
+			logger.debug(psize.getFit());
+		}
+		
 		/*
 		logger.debug("업로드 이미지명 "+product.getRepImg().getOriginalFilename());
 		
@@ -146,12 +150,6 @@ public class ProductController implements ServletContextAware{
 		
 		productService.regist(fileManager, product); //상품등록 서비스에게 요청
 		
-		/*
-		for(int i=0;i<product.getFit().length;i++) {
-			String fit = product.getFit()[i];
-			logger.debug("지원 사이즈는  "+fit);
-		}
-		*/
 		return "haahahah";
 	}
 
