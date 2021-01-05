@@ -9,13 +9,18 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.stereotype.Component;
+
+import com.koreait.fashionshop.exception.MailSendException;
+
+@Component
 public class MailSender {
 	String host = "smtp.gmail.com";
 	String user = "zino1187@gmail.com";
 	String password = "cluscskqavlddxzu"; //크롬브라우저 보안에서 인증받은 비번넣기
 	Properties props = new Properties();
 	
-	public void send(String to, String title, String content) {
+	public void send(String to, String title, String content) throws MailSendException{
 		props.put("mail.smtp.host", host);
 		props.put("mail.smtp.port", 465);
 		props.put("mail.smtp.auth", "true");
@@ -40,6 +45,7 @@ public class MailSender {
 			System.out.println("Success Message Send");
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			throw new MailSendException("회원가입 메일 발송실패");
 		}
 	}
 }

@@ -5,6 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.fashionshop.common.MailSender;
+import com.koreait.fashionshop.exception.MailSendException;
+import com.koreait.fashionshop.exception.MemberRegistException;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.member.repository.MemberDAO;
 
@@ -14,8 +17,9 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO memberDAO;
 	
 	//메일발송 객체
+	@Autowired
+	private MailSender mailSender;
 	
-
 	
 	@Override
 	public List selectAll() {
@@ -30,10 +34,15 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void regist(Member member) {
+	public void regist(Member member) throws MemberRegistException, MailSendException{
 		//DB에 넣기 + 이메일보내기 + 문자발송..
+		memberDAO.insert(member);
 		
+		String name=member.getName();
+		String addr=member.getAddr();
+		String email = member.getEmail_id()+"@"+member.getEmail_server();
 		
+		mailSender.send(email , name+"님 [패션샵]가입축하드려요", addr+"에 거주하세요? 감사합니당");
 	}
 
 	@Override
