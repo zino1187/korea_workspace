@@ -91,7 +91,7 @@ $(function(){
 	
 	$("#dragArea").on("drop", function(e){ //드래그영역 위에서 이미지를 떨구면..
 		e.preventDefault(); //여타 다른 이벤트를 비활성화시키자...
-		$(this).append("drop<br>");
+		//$(this).append("drop<br>");
 		
 		//자바스크립트로 드래그된 이미지 정보를 구해와서, div영역에 미리보기 효과..
 		var fileList = e.originalEvent.dataTransfer.files; //드래그한 파일들에 대한 배열 얻기!!
@@ -106,7 +106,7 @@ $(function(){
 	});
 	
 	$("#dragArea").on("dragleave", function(e){ //드래그 영역에서 빠져나가면
-		$(this).append("dragleave<br>");
+		//$(this).append("dragleave<br>");
 		$(this).removeClass("dragBorder");
 	});
 	
@@ -237,8 +237,14 @@ function regist(){
 		contentType:false, /* false일 경우 multipart/form-data*/
 		processData:false, /* false일 경우 query-string으로 전송하지 않음*/
 		type:"post",
-		success:function(result){
-			alert(result);
+		success:function(responseData){
+			var json = JSON.parse(responseData); //string --> json 으로 파싱..
+			if(json.result==1){
+				alert(json.msg);
+				location.href="/admin/product/list";
+			}else{
+				alert(json.msg);
+			}
 		}
 	});
 	

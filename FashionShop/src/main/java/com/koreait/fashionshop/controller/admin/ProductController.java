@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,6 +16,7 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.common.FileManager;
+import com.koreait.fashionshop.exception.ProductRegistException;
 import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
@@ -127,7 +129,7 @@ public class ProductController implements ServletContextAware{
 	//상품 상세 
 	
 	//상품 등록 
-	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST, produces ="text/html;charset=utf8")
 	@ResponseBody
 	public String registProduct(Product product, String[] test) {
 		logger.debug("하위카테고리 "+product.getSubcategory_id());
@@ -140,17 +142,15 @@ public class ProductController implements ServletContextAware{
 			logger.debug(psize.getFit());
 		}
 		
-		/*
-		logger.debug("업로드 이미지명 "+product.getRepImg().getOriginalFilename());
-		
-		for(int i=0;i<product.getAddImg().length;i++) {
-			logger.debug(product.getAddImg()[i].getOriginalFilename());
-		}
-		*/
-		
 		productService.regist(fileManager, product); //상품등록 서비스에게 요청
 		
-		return "haahahah";
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":1,");
+		sb.append("\"msg\":\"상품등록 성공\"");
+		sb.append("}");
+		
+		return sb.toString();
 	}
 
 
@@ -162,7 +162,18 @@ public class ProductController implements ServletContextAware{
 
 	
 	//예외처리 
-	//위의 메서드 중에서 하나라도 예외가 발생하면, 
+	//위의 메서드 중에서 하나라도 예외가 발생하면, 아래의 핸들러가 동작
+	@ExceptionHandler(ProductRegistException.class)
+	@ResponseBody
+	public String handleException(ProductRegistException e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":0");
+		sb.append("\"msg\":\""+e.getMessage()+"\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
 }
 
 
