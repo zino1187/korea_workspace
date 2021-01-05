@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.koreait.fashionshop.common.MailSender;
+import com.koreait.fashionshop.common.SecureManager;
 import com.koreait.fashionshop.exception.MailSendException;
 import com.koreait.fashionshop.exception.MemberRegistException;
 import com.koreait.fashionshop.model.domain.Member;
@@ -20,6 +21,9 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MailSender mailSender;
 	
+	//암호화 객체 
+	@Autowired
+	private SecureManager secureManager;
 	
 	@Override
 	public List selectAll() {
@@ -36,6 +40,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public void regist(Member member) throws MemberRegistException, MailSendException{
 		//DB에 넣기 + 이메일보내기 + 문자발송..
+		
+		//암호화 처리 
+		String secureData = secureManager.getSecureData(member.getPassword());
+		member.setPassword(secureData); //변환시켜 다시 VO에 대입
+		
 		memberDAO.insert(member);
 		
 		String name=member.getName();

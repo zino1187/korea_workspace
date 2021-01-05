@@ -42,6 +42,27 @@
 	  background-color: #f2f2f2;
 	  padding: 20px;
 	}
+	
+	.loader {
+	  border: 16px solid #f3f3f3;
+	  border-radius: 50%;
+	  border-top: 16px solid #3498db;
+	  width: 120px;
+	  height: 120px;
+	  -webkit-animation: spin 2s linear infinite; /* Safari */
+	  animation: spin 2s linear infinite;
+	}
+	
+	/* Safari */
+	@-webkit-keyframes spin {
+	  0% { -webkit-transform: rotate(0deg); }
+	  100% { -webkit-transform: rotate(360deg); }
+	}
+	
+	@keyframes spin {
+	  0% { transform: rotate(0deg); }
+	  100% { transform: rotate(360deg); }
+	}	
 	</style>	
 	<script>
 	$(function(){
@@ -64,7 +85,9 @@
 <body>
     	<%@include file="../inc/top.jsp" %>
         <!-- ****** Top Discount Area End ****** -->
-		<div class="container">        
+		<div class="container">   
+			<div class="loader"></div>
+			    
 			<form id="member_form">
 				<input type="text" 		name="user_id" 	placeholder="Your ID..">
 				<input type="text" 		name="name" 		placeholder="Your name..">
