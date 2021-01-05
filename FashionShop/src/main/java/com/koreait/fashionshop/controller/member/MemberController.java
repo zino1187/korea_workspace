@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.exception.MailSendException;
@@ -29,7 +30,8 @@ public class MemberController {
 	}
 	
 	//회원가입 요청 처리 
-	@RequestMapping(value="/shop/member/regist", method=RequestMethod.POST)
+	@RequestMapping(value="/shop/member/regist", method=RequestMethod.POST, produces="text/html;charset=utf-8")
+	@ResponseBody
 	public String regist(Member member) {
 		logger.debug("아이디 "+member.getUser_id());
 		logger.debug("이름 "+member.getName());
@@ -41,16 +43,26 @@ public class MemberController {
 		
 		memberService.regist(member);
 		
-		return "redirect:/";
+		StringBuffer sb = new StringBuffer();
+		sb.append("{");
+		sb.append(" \"result\":1, ");
+		sb.append(" \"msg\":\"회원가입 성공\"");
+		sb.append("}");
+		
+		return sb.toString();
 	} 
 
 	//예외 핸들러 2가지 처리
 	@ExceptionHandler(MemberRegistException.class)
-	public ModelAndView handleException(MemberRegistException e) {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg", e.getMessage()); //사용자가 보게될 에러 메시지
-		mav.setViewName("shop/error/result");
-		return mav;
+	@ResponseBody
+	public String handleException(MemberRegistException e) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("{");
+		sb.append(" \"result\":0, ");
+		sb.append(" \"msg\":\""+e.getMessage()+"\"");
+		sb.append("}");
+		
+		return sb.toString();
 	}
 	
 	@ExceptionHandler(MailSendException.class)

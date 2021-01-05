@@ -44,11 +44,11 @@
 	}
 	
 	.loader {
-	  border: 16px solid #f3f3f3;
+	  border: 16px solid #ff0000;
 	  border-radius: 50%;
 	  border-top: 16px solid #3498db;
-	  width: 120px;
-	  height: 120px;
+	  width: 100px;
+	  height: 100px;
 	  -webkit-animation: spin 2s linear infinite; /* Safari */
 	  animation: spin 2s linear infinite;
 	}
@@ -72,12 +72,30 @@
 		});	
 	});
 	
+	//요청이 완료되는 시점에 프로그래스바를 감춘다!!
 	function regist(){
-		$("#member_form").attr({
-			action:"/shop/member/regist",
-			method:"post"
+		//로딩바 시작
+		$("#loader").addClass("loader"); //class 동적 적용
+		
+		//form 태그의 파라미터들을 전송할수있는 상태로 둬야  data키값에 form 자체를 넣을 수 있다.
+		var formData = $("#member_form").serialize(); //전부 문자열화 시킨다!!
+		
+		$.ajax({
+			url:"/shop/member/regist",
+			type:"post",
+			data:formData,
+			success:function(responseData){
+				//서버로부터 완료 응답을 받으면 로딩바 효과를 중단!!
+				$("#loader").removeClass("loader"); //class 동적 제거
+				var json = JSON.parse(responseData);
+				if(json.result==1){
+					alert(json.msg);
+					location.href="/"; //추후 로그인 페이지로 보낼예정
+				}else{
+					alert(json.msg);
+				}
+			}
 		});
-		$("#member_form").submit();
 	}
 	</script>		
 </head>
@@ -86,7 +104,7 @@
     	<%@include file="../inc/top.jsp" %>
         <!-- ****** Top Discount Area End ****** -->
 		<div class="container">   
-			<div class="loader"></div>
+			<div id="loader" style="margin:auto"></div>
 			    
 			<form id="member_form">
 				<input type="text" 		name="user_id" 	placeholder="Your ID..">
