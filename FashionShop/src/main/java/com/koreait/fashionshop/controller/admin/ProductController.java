@@ -115,6 +115,8 @@ public class ProductController implements ServletContextAware{
 	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET )
 	public ModelAndView getProductList() {
 		ModelAndView mav = new ModelAndView("admin/product/product_list");
+		List productList = productService.selectAll();
+		mav.addObject("productList", productList);
 		return mav;
 	}
 	
@@ -132,7 +134,7 @@ public class ProductController implements ServletContextAware{
 	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST, produces ="text/html;charset=utf8")
 	@ResponseBody
 	public String registProduct(Product product, String[] test) {
-		logger.debug("하위카테고리 "+product.getSubcategory_id());
+		logger.debug("하위카테고리 "+product.getSubCategory().getSubcategory_id());
 		logger.debug("상품명 "+product.getProduct_name());
 		logger.debug("가격 "+product.getPrice());
 		logger.debug("브랜드 "+product.getBrand());

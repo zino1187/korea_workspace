@@ -274,7 +274,7 @@ function regist(){
   		<%} %>
   	</select>
   	
-  	<select name="subcategory_id">
+  	<select name="subCategory.subcategory_id">
   		<option>하위카테고리 선택</option>
   	</select>
     <input type="text" name="product_name" placeholder="상품명">

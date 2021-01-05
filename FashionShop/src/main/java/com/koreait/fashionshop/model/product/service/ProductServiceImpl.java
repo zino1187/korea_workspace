@@ -38,8 +38,7 @@ public class ProductServiceImpl implements ProductService{
 	
 	@Override
 	public List selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.selectAll();
 	}
 
 	@Override
