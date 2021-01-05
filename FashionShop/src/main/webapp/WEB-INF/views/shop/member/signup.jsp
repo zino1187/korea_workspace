@@ -13,7 +13,7 @@
 	<%@ include file="../inc/header.jsp" %>
 	<style>
 
-	input[type=text], select, textarea {
+	input[type=text], select, textarea , input[type=password]{
 	  width: 100%;
 	  padding: 12px;
 	  border: 1px solid #ccc;
@@ -24,7 +24,7 @@
 	  resize: vertical;
 	}
 	
-	input[type=submit] {
+	input[type=button] {
 	  background-color: #4CAF50;
 	  color: white;
 	  padding: 12px 20px;
@@ -33,7 +33,7 @@
 	  cursor: pointer;
 	}
 	
-	input[type=submit]:hover {
+	input[type=button]:hover {
 	  background-color: #45a049;
 	}
 	
@@ -42,31 +42,42 @@
 	  background-color: #f2f2f2;
 	  padding: 20px;
 	}
-	</style>		
+	</style>	
+	<script>
+	$(function(){
+		//회원가입 처리 
+		$("input[type='button']").click(function(){
+			regist();
+		});	
+	});
+	
+	function regist(){
+		$("#member_form").attr({
+			action:"/shop/member/regist",
+			method:"post"
+		});
+		$("#member_form").submit();
+	}
+	</script>		
 </head>
 
 <body>
     	<%@include file="../inc/top.jsp" %>
         <!-- ****** Top Discount Area End ****** -->
 		<div class="container">        
-			<form action="/action_page.php">
-				<label for="fname">First Name</label>
-				<input type="text" id="fname" name="firstname" placeholder="Your name..">
-			
-				<label for="lname">Last Name</label>
-				<input type="text" id="lname" name="lastname" placeholder="Your last name..">
-			
-				<label for="country">Country</label>
-				<select id="country" name="country">
-				<option value="australia">Australia</option>
-				<option value="canada">Canada</option>
-				<option value="usa">USA</option>
+			<form id="member_form">
+				<input type="text" 		name="user_id" 	placeholder="Your ID..">
+				<input type="text" 		name="name" 		placeholder="Your name..">
+				<input type="password" name="password" 	placeholder="Your password..">
+				<input type="text" 		name="email_id" 	placeholder="이메일 아이디">
+				<select name="email_server">
+					<option value="gmail.com">gmail.com</option>
+					<option value="daum.net">daum.net</option>
+					<option value="naver.com">naver.com</option>
 				</select>
-			
-				<label for="subject">Subject</label>
-				<textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
-			
-				<input type="submit" value="Submit">
+				<input type="text" 		name="zipcode" 	placeholder="우편번호">
+				<input type="text" 		name="addr" 		placeholder="주소입력">
+				<input type="button" 	value="가입">
 			</form>		       
 		</div>	
         <!-- ****** Footer Area Start ****** -->
