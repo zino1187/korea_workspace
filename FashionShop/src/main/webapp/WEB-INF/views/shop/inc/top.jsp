@@ -18,9 +18,9 @@
                     <!-- Single Item -->
                     <%for(int i=0;i<topList.size();i++){ %>
                     <%TopCategory topCategory=topList.get(i); %>
-                    <li data-toggle="collapse" data-target="#women" class="collapsed active">
+                    <li data-toggle="collapse" data-target="#<%=topCategory.getTopcategory_id() %>" class="collapsed active">
                         <a href="#"><%=topCategory.getName() %><span class="arrow"></span></a>
-                        <ul class="sub-menu collapse" id="women">
+                        <ul class="sub-menu collapse" id="<%=topCategory.getTopcategory_id()%>">
                         	<%for(int a=0;a<topCategory.getSubCategory().size();a++){ %>
                         	<%SubCategory subCategory=topCategory.getSubCategory().get(a);%>
                             <li><a href="#"><%=subCategory.getName() %></a></li>
@@ -114,11 +114,11 @@
                                             <li class="nav-item dropdown">
                                                 <a class="nav-link dropdown-toggle" href="#" id="karlDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
                                                 <div class="dropdown-menu" aria-labelledby="karlDropdown">
-                                                    <a class="dropdown-item" href="index.html">Home</a>
-                                                    <a class="dropdown-item" href="shop.html">Shop</a>
-                                                    <a class="dropdown-item" href="product-details.html">Product Details</a>
-                                                    <a class="dropdown-item" href="cart.html">Cart</a>
-                                                    <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                                    <a class="dropdown-item" href="/">Home</a>
+                                                    <a class="dropdown-item" href="/shop/product/list?subcategory_id=1">Shop</a>
+                                                    <a class="dropdown-item" href="/shop/product/detail">Product Details</a>
+                                                    <a class="dropdown-item" href="/shop/cart/list">Cart</a>
+                                                    <a class="dropdown-item" href="/shop/checkout/form">Checkout</a>
                                                 </div>
                                             </li>
                                             <li class="nav-item"><a class="nav-link" href="#">Dresses</a></li>

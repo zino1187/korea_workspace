@@ -31,6 +31,17 @@
 		</selectKey>
 	</insert>
 	
-	
+	<!--지정한 하위 카테고리에 소속된 모든 상품 가져오기  -->
+	<select id="selectBySubCategoryId" parameterType="int" resultType="Product">
+		select * from product where subcategory_id=#{subcategory_id}
+	</select>	
 	
 </mapper>
+
+
+
+
+
+
+
+

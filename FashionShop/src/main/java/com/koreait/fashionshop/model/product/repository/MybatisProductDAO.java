@@ -21,8 +21,7 @@ public class MybatisProductDAO implements ProductDAO{
 
 	@Override
 	public List selectById(int subcategory_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSessionTemplate.selectList("Product.selectBySubCategoryId", subcategory_id);
 	}
 
 	@Override
