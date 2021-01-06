@@ -18,6 +18,12 @@
     <!-- Title  -->
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
+	<script type="text/javascript">
+		//비동기 방식으로 장바구니에 담자!!
+		function addCart(){
+			
+		}
+	</script>
 </head>
 
 <body>
@@ -111,7 +117,7 @@
                                     <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                 </div>
-                                <button type="submit" name="addtocart" value="5" class="btn cart-submit d-block">Add to cart</button>
+                                <button type="button" name="addtocart" value="5" class="btn cart-submit d-block" onClick="addCart()">Add to cart</button>
                             </form>
 
                             <div id="accordion" role="tablist">
@@ -202,7 +208,9 @@
 
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
-                                            <button type="submit" name="addtocart" value="5" class="cart-submit">Add to cart</button>
+                                            
+                                            <button type="button" name="addtocart" value="5" class="cart-submit">Add to cart</button>
+                                            
                                             <!-- Wishlist -->
                                             <div class="modal_pro_wishlist">
                                                 <a href="wishlist.html" target="_blank"><i class="ti-heart"></i></a>
