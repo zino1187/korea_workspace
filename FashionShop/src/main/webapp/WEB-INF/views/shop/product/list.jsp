@@ -18,6 +18,29 @@
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
 	<script>
+	$(function(){
+		//product-quicview를 클릭했을때...
+		$(".product-quicview").on("click", function(e){
+			var obj = e.target;
+			var product_id=$(obj).data("product_id");
+			var product_name=$(obj).data("product_name");
+			var price=$(obj).data("price");
+			var brand=$(obj).data("brand");
+			var detail=$(obj).data("detail");
+			var filename=$(obj).data("filename");
+			
+			console.log(product_id);
+			console.log(product_name);
+			console.log(price);
+			console.log(brand);
+			console.log(detail);
+			console.log(filename);
+			
+			//지금 클릭한 상품의 정보를 구해와서, 퀵뷰창에 보여줘야 한다!!
+			//alert();
+		});
+		
+	});
 	</script>		
 </head>
 
@@ -106,60 +129,18 @@
                                     <h6 class="mb-0">Catagories</h6>
                                     <div class="menu-list">
                                         <ul id="menu-content2" class="menu-content collapse out">
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#women2">
-                                                <a href="#">Woman wear</a>
-                                                <ul class="sub-menu collapse show" id="women2">
-                                                    <li><a href="#">Midi Dresses</a></li>
-                                                    <li><a href="#">Maxi Dresses</a></li>
-                                                    <li><a href="#">Prom Dresses</a></li>
-                                                    <li><a href="#">Little Black Dresses</a></li>
-                                                    <li><a href="#">Mini Dresses</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#man2" class="collapsed">
-                                                <a href="#">Man Wear</a>
-                                                <ul class="sub-menu collapse" id="man2">
-                                                    <li><a href="#">Man Dresses</a></li>
-                                                    <li><a href="#">Man Black Dresses</a></li>
-                                                    <li><a href="#">Man Mini Dresses</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#kids2" class="collapsed">
-                                                <a href="#">Children</a>
-                                                <ul class="sub-menu collapse" id="kids2">
-                                                    <li><a href="#">Children Dresses</a></li>
-                                                    <li><a href="#">Mini Dresses</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#bags2" class="collapsed">
-                                                <a href="#">Bags &amp; Purses</a>
-                                                <ul class="sub-menu collapse" id="bags2">
-                                                    <li><a href="#">Bags</a></li>
-                                                    <li><a href="#">Purses</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#eyewear2" class="collapsed">
-                                                <a href="#">Eyewear</a>
-                                                <ul class="sub-menu collapse" id="eyewear2">
-                                                    <li><a href="#">Eyewear Style 1</a></li>
-                                                    <li><a href="#">Eyewear Style 2</a></li>
-                                                    <li><a href="#">Eyewear Style 3</a></li>
-                                                </ul>
-                                            </li>
-                                            <!-- Single Item -->
-                                            <li data-toggle="collapse" data-target="#footwear2" class="collapsed">
-                                                <a href="#">Footwear</a>
-                                                <ul class="sub-menu collapse" id="footwear2">
-                                                    <li><a href="#">Footwear 1</a></li>
-                                                    <li><a href="#">Footwear 2</a></li>
-                                                    <li><a href="#">Footwear 3</a></li>
-                                                </ul>
-                                            </li>
+                                            
+                                            <%for(TopCategory topCategory : topList){ %>
+						                    <!-- Single Item -->
+						                    <li data-toggle="collapse" data-target="#category<%=topCategory.getTopcategory_id()%>" class="collapsed">
+						                        <a href="#"><%=topCategory.getName() %> <span class="arrow"></span></a>
+						                        <ul class="sub-menu collapse" id="category<%=topCategory.getTopcategory_id()%>">
+						                            <%for(SubCategory subCategory : topCategory.getSubCategory()){ %>
+						                            <li><a href="#"><%=subCategory.getName() %></a></li>
+						                            <%} %>
+						                        </ul>
+						                    </li>
+                                            <%} %>
                                         </ul>
                                     </div>
                                 </div>
@@ -257,7 +238,16 @@
                                     <div class="product-img">
                                         <img src="/resources/data/basic/<%=product.getProduct_id()%>.<%=product.getFilename()%>" alt="">
                                         <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
+                                            <a href="" data-toggle="modal" data-target="#quickview">
+                                            	<i class="ti-plus"
+                                            		data-product_id="<%=product.getProduct_id()%>"
+                                            		data-product_name="<%=product.getProduct_name() %>" 
+                                            		data-price="<%=product.getPrice() %>"
+                                            		data-brand="<%=product.getBrand() %>"  
+                                            		data-detail="<%=product.getDetail() %>"
+                                            		data-filename="<%=product.getFilename() %>"                                            		
+                                            		></i>
+                                            </a>
                                         </div>
                                     </div>
                                     <!-- Product Description -->
