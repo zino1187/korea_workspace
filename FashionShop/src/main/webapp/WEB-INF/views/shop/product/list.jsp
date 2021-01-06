@@ -35,10 +35,17 @@
 			console.log(brand);
 			console.log(detail);
 			console.log(filename);
-			
 
-			//지금 클릭한 상품의 정보를 구해와서, 퀵뷰창에 보여줘야 한다!!
-			//alert();
+			//퀵뷰창의 상품 정보에 출력
+			
+			//이미지
+			$(".quickview_pro_img img").attr({
+				src:"/resources/data/basic/"+product_id+"."+filename
+			});
+			
+			$(".quickview_pro_des .title").html(product_name);//상품명
+			$(".quickview_pro_des .price").html(price);//가격
+			$(".quickview_pro_des p").html(detail);//상세내용
 		});
 		
 	});
@@ -243,7 +250,7 @@
                                             	<i class="ti-plus"
                                             		data-product_id="<%=product.getProduct_id()%>"
                                             		data-product_name="<%=product.getProduct_name() %>" 
-                                            		data-price="<%=product.getPrice() %>"
+                                            		data-price="<%=Formatter.getCurrency(product.getPrice())%>"
                                             		data-brand="<%=product.getBrand() %>"  
                                             		data-detail="<%=product.getDetail() %>"
                                             		data-filename="<%=product.getFilename() %>"                                            		
