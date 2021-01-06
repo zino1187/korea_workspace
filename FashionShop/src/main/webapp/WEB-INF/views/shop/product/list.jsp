@@ -36,6 +36,7 @@
 			console.log(detail);
 			console.log(filename);
 			
+
 			//지금 클릭한 상품의 정보를 구해와서, 퀵뷰창에 보여줘야 한다!!
 			//alert();
 		});
