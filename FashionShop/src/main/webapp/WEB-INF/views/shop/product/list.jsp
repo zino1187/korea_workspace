@@ -1,3 +1,4 @@
+<%@page import="com.koreait.fashionshop.common.Formatter"%>
 <%@page import="com.koreait.fashionshop.model.domain.Product"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
@@ -16,92 +17,7 @@
     <!-- Title  -->
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
-	<style>
-
-	input[type=text], select, textarea , input[type=password]{
-	  width: 100%;
-	  padding: 12px;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
-	  box-sizing: border-box;
-	  margin-top: 6px;
-	  margin-bottom: 16px;
-	  resize: vertical;
-	}
-	
-	input[type=button] {
-	  background-color: #4CAF50;
-	  color: white;
-	  padding: 12px 20px;
-	  border: none;
-	  border-radius: 4px;
-	  cursor: pointer;
-	}
-	
-	input[type=button]:hover {
-	  background-color: #45a049;
-	}
-	
-	.container {
-	  border-radius: 5px;
-	  background-color: #f2f2f2;
-	  padding: 20px;
-	}
-	
-	.loader {
-	  border: 16px solid #ff0000;
-	  border-radius: 50%;
-	  border-top: 16px solid #3498db;
-	  width: 100px;
-	  height: 100px;
-	  -webkit-animation: spin 2s linear infinite; /* Safari */
-	  animation: spin 2s linear infinite;
-	}
-	
-	/* Safari */
-	@-webkit-keyframes spin {
-	  0% { -webkit-transform: rotate(0deg); }
-	  100% { -webkit-transform: rotate(360deg); }
-	}
-	
-	@keyframes spin {
-	  0% { transform: rotate(0deg); }
-	  100% { transform: rotate(360deg); }
-	}	
-	</style>	
 	<script>
-	$(function(){
-		//회원가입 처리 
-		$("input[type='button']").click(function(){
-			regist();
-		});	
-	});
-	
-	//요청이 완료되는 시점에 프로그래스바를 감춘다!!
-	function regist(){
-		//로딩바 시작
-		$("#loader").addClass("loader"); //class 동적 적용
-		
-		//form 태그의 파라미터들을 전송할수있는 상태로 둬야  data키값에 form 자체를 넣을 수 있다.
-		var formData = $("#member_form").serialize(); //전부 문자열화 시킨다!!
-		
-		$.ajax({
-			url:"/shop/member/regist",
-			type:"post",
-			data:formData,
-			success:function(responseData){
-				//서버로부터 완료 응답을 받으면 로딩바 효과를 중단!!
-				$("#loader").removeClass("loader"); //class 동적 제거
-				var json = JSON.parse(responseData);
-				if(json.result==1){
-					alert(json.msg);
-					location.href="/"; //추후 로그인 페이지로 보낼예정
-				}else{
-					alert(json.msg);
-				}
-			}
-		});
-	}
 	</script>		
 </head>
 
@@ -122,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-12 col-lg-5">
                                         <div class="quickview_pro_img">
-                                            <img src="img/product-img/product-1.jpg" alt="">
+                                            <img src="/resources/img/product-img/product-1.jpg" alt="">
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-7">
@@ -298,7 +214,7 @@
                                     <!-- Single Recommended Product -->
                                     <div class="single-recommended-product d-flex mb-30">
                                         <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-10.jpg" alt="">
+                                            <img src="/resources/img/product-img/product-10.jpg" alt="">
                                         </div>
                                         <div class="single-recommended-desc">
                                             <h6>Menâs T-shirt</h6>
@@ -308,7 +224,7 @@
                                     <!-- Single Recommended Product -->
                                     <div class="single-recommended-product d-flex mb-30">
                                         <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-11.jpg" alt="">
+                                            <img src="/resources/img/product-img/product-11.jpg" alt="">
                                         </div>
                                         <div class="single-recommended-desc">
                                             <h6>Blue mini top</h6>
@@ -318,7 +234,7 @@
                                     <!-- Single Recommended Product -->
                                     <div class="single-recommended-product d-flex">
                                         <div class="single-recommended-thumb mr-3">
-                                            <img src="img/product-img/product-12.jpg" alt="">
+                                            <img src="/resources/img/product-img/product-12.jpg" alt="">
                                         </div>
                                         <div class="single-recommended-desc">
                                             <h6>Womenâs T-shirt</h6>
@@ -333,168 +249,27 @@
                     <div class="col-12 col-md-8 col-lg-9">
                         <div class="shop_grid_product_area">
                             <div class="row">
-
+								<%for(int i=0;i<productList.size();i++){ %>
+								<%Product product = productList.get(i); %>	
                                 <!-- Single gallery Item -->
                                 <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.2s">
                                     <!-- Product Image -->
                                     <div class="product-img">
-                                        <img src="img/product-img/product-1.jpg" alt="">
+                                        <img src="/resources/data/basic/<%=product.getProduct_id()%>.<%=product.getFilename()%>" alt="">
                                         <div class="product-quicview">
                                             <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
                                         </div>
                                     </div>
                                     <!-- Product Description -->
                                     <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
+                                        <h4 class="product-price"><%=Formatter.getCurrency(product.getPrice())%></h4>
+                                        <p><%=product.getProduct_name() %></p>
                                         <!-- Add to Cart -->
                                         <a href="#" class="add-to-cart-btn">ADD TO CART</a>
                                     </div>
                                 </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.3s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-2.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.4s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-3.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.5s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-4.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.6s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-5.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.7s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-6.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.8s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-7.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="0.9s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-8.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
-
-                                <!-- Single gallery Item -->
-                                <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig" data-wow-delay="1s">
-                                    <!-- Product Image -->
-                                    <div class="product-img">
-                                        <img src="img/product-img/product-9.jpg" alt="">
-                                        <div class="product-quicview">
-                                            <a href="#" data-toggle="modal" data-target="#quickview"><i class="ti-plus"></i></a>
-                                        </div>
-                                    </div>
-                                    <!-- Product Description -->
-                                    <div class="product-description">
-                                        <h4 class="product-price">$39.90</h4>
-                                        <p>Jeans midi cocktail dress</p>
-                                        <!-- Add to Cart -->
-                                        <a href="#" class="add-to-cart-btn">ADD TO CART</a>
-                                    </div>
-                                </div>
+								<%} %>
+                                
                             </div>
                         </div>
 
