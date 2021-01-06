@@ -199,8 +199,11 @@ public class ProductController implements ServletContextAware{
 	@RequestMapping(value="/shop/product/detail", method=RequestMethod.GET)
 	public ModelAndView getShopProductDetail(int product_id) {
 		List topList = topCategoryService.selectAll();//상품카테고리 목록
+		Product product = productService.select(product_id);//상품 1건 가져오기
+		
 		ModelAndView mav = new ModelAndView("shop/product/detail");
 		mav.addObject("topList", topList);
+		mav.addObject("product", product);
 		
 		return mav;
 	}

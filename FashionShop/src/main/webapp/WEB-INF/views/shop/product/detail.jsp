@@ -1,4 +1,11 @@
+<%@page import="com.koreait.fashionshop.model.domain.Image"%>
+<%@page import="com.koreait.fashionshop.model.domain.Psize"%>
+<%@page import="com.koreait.fashionshop.common.Formatter"%>
+<%@page import="com.koreait.fashionshop.model.domain.Product"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+	Product product = (Product)request.getAttribute("product");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,93 +18,6 @@
     <!-- Title  -->
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
-	<style>
-
-	input[type=text], select, textarea , input[type=password]{
-	  width: 100%;
-	  padding: 12px;
-	  border: 1px solid #ccc;
-	  border-radius: 4px;
-	  box-sizing: border-box;
-	  margin-top: 6px;
-	  margin-bottom: 16px;
-	  resize: vertical;
-	}
-	
-	input[type=button] {
-	  background-color: #4CAF50;
-	  color: white;
-	  padding: 12px 20px;
-	  border: none;
-	  border-radius: 4px;
-	  cursor: pointer;
-	}
-	
-	input[type=button]:hover {
-	  background-color: #45a049;
-	}
-	
-	.container {
-	  border-radius: 5px;
-	  background-color: #f2f2f2;
-	  padding: 20px;
-	}
-	
-	.loader {
-	  border: 16px solid #ff0000;
-	  border-radius: 50%;
-	  border-top: 16px solid #3498db;
-	  width: 100px;
-	  height: 100px;
-	  -webkit-animation: spin 2s linear infinite; /* Safari */
-	  animation: spin 2s linear infinite;
-	}
-	
-	/* Safari */
-	@-webkit-keyframes spin {
-	  0% { -webkit-transform: rotate(0deg); }
-	  100% { -webkit-transform: rotate(360deg); }
-	}
-	
-	@keyframes spin {
-	  0% { transform: rotate(0deg); }
-	  100% { transform: rotate(360deg); }
-	}	
-	</style>	
-	<script>
-	$(function(){
-		//회원가입 처리 
-		$("input[type='button']").click(function(){
-			regist();
-		});	
-	});
-	
-	//요청이 완료되는 시점에 프로그래스바를 감춘다!!
-	function regist(){
-		//로딩바 시작
-		$("#loader").addClass("loader"); //class 동적 적용
-		
-		//form 태그의 파라미터들을 전송할수있는 상태로 둬야  data키값에 form 자체를 넣을 수 있다.
-		var formData = $("#member_form").serialize(); //전부 문자열화 시킨다!!
-		
-		$.ajax({
-			url:"/shop/member/regist",
-			type:"post",
-			data:formData,
-			success:function(responseData){
-				//서버로부터 완료 응답을 받으면 로딩바 효과를 중단!!
-				$("#loader").removeClass("loader"); //class 동적 제거
-				var json = JSON.parse(responseData);
-				if(json.result==1){
-					alert(json.msg);
-					location.href="/"; //추후 로그인 페이지로 보낼예정
-				}else{
-					alert(json.msg);
-				}
-			}
-		});
-	}
-	</script>		
 </head>
 
 <body>
@@ -130,39 +50,26 @@
                     <div class="col-12 col-md-6">
                         <div class="single_product_thumb">
                             <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-
+									
+								<!-- 썸네일 -->	
                                 <ol class="carousel-indicators">
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/resources/img/product-img/product-9.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url(/resources/img/product-img/product-2.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url(/resources/img/product-img/product-3.jpg);">
-                                    </li>
-                                    <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url(/resources/img/product-img/product-4.jpg);">
-                                    </li>
+                                	<%for(int i=0;i<product.getImageList().size();i++){ %>
+                                	<%Image image = product.getImageList().get(i); %>
+                                	<%if(i>=4)break; //총 4개까지만 허용할 것이므로..%>
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>);"></li>
+                                    <%} %>
                                 </ol>
 
                                 <div class="carousel-inner">
+									<%for(int i=0;i<product.getImageList().size();i++){ %>
+                                	<%Image image = product.getImageList().get(i); %>   
+                                	<%if(i>=4)break; //총 4개까지만 허용할 것이므로..%>                         
                                     <div class="carousel-item active">
-                                        <a class="gallery_img" href="img/product-img/product-9.jpg">
-                                        <img class="d-block w-100" src="/resources/img/product-img/product-9.jpg" alt="First slide">
-                                    </a>
+                                        <a class="gallery_img" href="/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>">
+                                        	<img class="d-block w-100" src="/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>" alt="slide <%=i%>">
+                                    	</a>
                                     </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-2.jpg">
-                                        <img class="d-block w-100" src="/resources/img/product-img/product-2.jpg" alt="Second slide">
-                                    </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-3.jpg">
-                                        <img class="d-block w-100" src="/resources/img/product-img/product-3.jpg" alt="Third slide">
-                                    </a>
-                                    </div>
-                                    <div class="carousel-item">
-                                        <a class="gallery_img" href="img/product-img/product-4.jpg">
-                                        <img class="d-block w-100" src="/resources/img/product-img/product-4.jpg" alt="Fourth slide">
-                                    </a>
-                                    </div>
+                                   <%} %>
                                 </div>
                             </div>
                         </div>
@@ -171,17 +78,18 @@
                     <div class="col-12 col-md-6">
                         <div class="single_product_desc">
 
-                            <h4 class="title"><a href="#">Long Yellow Dress</a></h4>
+                            <h4 class="title"><a href="#"><%=product.getProduct_name() %></a></h4>
 
-                            <h4 class="price">$ 39.99</h4>
+                            <h4 class="price"><%=Formatter.getCurrency(product.getPrice()) %></h4>
 
                             <p class="available">Available: <span class="text-muted">In Stock</span></p>
 
                             <div class="single_product_ratings mb-15">
+                            	<!-- 1~5사이의 값에 따라 조건을 부여하고, 미달점수의 경우 -o를 붙인다 -->
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star-o" aria-hidden="true"></i>
                                 <i class="fa fa-star-o" aria-hidden="true"></i>
                             </div>
 
@@ -189,12 +97,9 @@
                                 <h6 class="widget-title">Size</h6>
                                 <div class="widget-desc">
                                     <ul>
-                                        <li><a href="#">32</a></li>
-                                        <li><a href="#">34</a></li>
-                                        <li><a href="#">36</a></li>
-                                        <li><a href="#">38</a></li>
-                                        <li><a href="#">40</a></li>
-                                        <li><a href="#">42</a></li>
+                                    	<%for(Psize psize : product.getPsizeList()){ %>
+                                        <li><a href="#"><%=psize.getFit() %></a></li>
+                                        <%} %>
                                     </ul>
                                 </div>
                             </div>
@@ -219,9 +124,7 @@
 
                                     <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
                                         <div class="card-body">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integ er bibendum sodales arcu id te mpus. Ut consectetur lacus.</p>
-                                            <p>Approx length 66cm/26" (Based on a UK size 8 sample) Mixed fibres</p>
-                                            <p>The Model wears a UK size 8/ EU size 36/ US size 4 and her height is 5'8"</p>
+                                            <p><%=product.getDetail() %></p>
                                         </div>
                                     </div>
                                 </div>

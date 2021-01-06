@@ -57,23 +57,26 @@
 		<!-- 사이즈 -->			
 		<collection 
 			column="product_id" 
-			property=""
-			javaType=""
-			ofType=""/>
+			property="psizeList"
+			javaType="java.util.List"
+			ofType="Psize"
+			select="Psize.selectByProductId"/>
 			
 		<!-- 색상 -->			
 		<collection 
 			column="product_id" 
-			property=""
-			javaType=""
-			ofType=""/>
+			property="colorList"
+			javaType="java.util.List"
+			ofType="Color"
+			select="Color.selectByProductId"/>
 			
 		<!-- 이미지 -->			
 		<collection 
 			column="product_id" 
-			property=""
-			javaType=""
-			ofType=""/>
+			property="imageList"
+			javaType="java.util.List"
+			ofType="Image"
+			select="Image.selectByProductId"/>
 			
 	</resultMap>
 	

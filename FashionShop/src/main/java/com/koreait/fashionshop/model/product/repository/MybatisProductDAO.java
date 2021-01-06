@@ -26,8 +26,7 @@ public class MybatisProductDAO implements ProductDAO{
 
 	@Override
 	public Product select(int product_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSessionTemplate.selectOne("Product.select", product_id);
 	}
 
 	@Override
