@@ -1,4 +1,4 @@
-package com.koreait.fashionshop.controller.admin;
+package com.koreait.fashionshop.controller.product;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ public class ProductController implements ServletContextAware{
 		
 	}
 	
-	//상위카테고리 가져오기 
+	//상위카테고리 가져오기 (관리자용)
 	@RequestMapping(value="/admin/product/registform", method=RequestMethod.GET)
 	public ModelAndView getTopList() {
 		//3단계: 로직 객체에 일시킨다
@@ -176,6 +176,11 @@ public class ProductController implements ServletContextAware{
 		return sb.toString();
 	}
 	
+	
+	
+	/* *********************************************************************** 
+	  쇼핑몰 프론트 요청 처리 
+	 ************************************************************************/
 }
 
 
