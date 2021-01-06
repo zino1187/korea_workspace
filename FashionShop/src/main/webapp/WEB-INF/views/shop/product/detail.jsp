@@ -21,7 +21,16 @@
 	<script type="text/javascript">
 		//비동기 방식으로 장바구니에 담자!!
 		function addCart(){
+			var formData=$("#cart_form").serialize();//파라미터를 전송할 수 있는 상태의 문자열로 나열해줌
 			
+			$.ajax({
+				url:"/shop/cart/regist",
+				type:"post", 
+				data:formData,
+				success:function(responseData){
+					alert(responseData);
+				}
+			});
 		}
 	</script>
 </head>
@@ -62,15 +71,15 @@
                                 	<%for(int i=0;i<product.getImageList().size();i++){ %>
                                 	<%Image image = product.getImageList().get(i); %>
                                 	<%if(i>=4)break; //총 4개까지만 허용할 것이므로..%>
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url(/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>);"></li>
+                                    <li <%if(i==0){%>class="active"<%}%>  data-target="#product_details_slider" data-slide-to="<%=i %>" style="background-image: url(/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>);"></li>
                                     <%} %>
                                 </ol>
 
                                 <div class="carousel-inner">
 									<%for(int i=0;i<product.getImageList().size();i++){ %>
                                 	<%Image image = product.getImageList().get(i); %>   
-                                	<%if(i>=4)break; //총 4개까지만 허용할 것이므로..%>                         
-                                    <div class="carousel-item active">
+                                	<%if(i>=4)break; //총 4개까지만 허용할 것이므로..%>
+                                    <div class="carousel-item<%if(i==0){%><%out.print(" active");%><%}%>" >
                                         <a class="gallery_img" href="/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>">
                                         	<img class="d-block w-100" src="/resources/data/addon/<%=image.getImage_id()%>.<%=image.getFilename()%>" alt="slide <%=i%>">
                                     	</a>
@@ -111,10 +120,12 @@
                             </div>
 
                             <!-- Add to Cart Form -->
-                            <form class="cart clearfix mb-50 d-flex" method="post">
+                            <form id="cart_form" class="cart clearfix mb-50 d-flex">
+                            	<input type="hidden" name="product_id" value="<%=product.getProduct_id()%>">
+                            	
                                 <div class="quantity">
                                     <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="12" name="quantity" value="1">
+                                    <input type="number" name="quantity" class="qty-text" id="qty" step="1" min="1" max="12"  value="1">
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                 </div>
                                 <button type="button" name="addtocart" value="5" class="btn cart-submit d-block" onClick="addCart()">Add to cart</button>

@@ -12,6 +12,7 @@
 		<typeAlias type="com.koreait.fashionshop.model.domain.Psize" 				alias="Psize"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.Color" 				alias="Color"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.Member" 		alias="Member"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Cart" 				alias="Cart"/>
 	</typeAliases>
 	
 	<mappers>
@@ -23,6 +24,7 @@
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/PsizeMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/ColorMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/MemberMapper.xml"/>
+		<mapper resource="com/koreait/fashionshop/mybatis/mapper/CartMapper.xml"/>
 	</mappers>
 	
 </configuration>
