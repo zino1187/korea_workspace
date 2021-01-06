@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
 	List<Product> productList  = (List)request.getAttribute("productList");
-	out.print("가져온 상품의 수는 "+productList.size());
+	//out.print("가져온 상품의 수는 "+productList.size());
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +46,10 @@
 			$(".quickview_pro_des .title").html(product_name);//상품명
 			$(".quickview_pro_des .price").html(price);//가격
 			$(".quickview_pro_des p").html(detail);//상세내용
+			
+			$(".quickview_pro_des a").on("click", function(e){
+				location.href="/shop/product/detail?product_id="+product_id;
+			});
 		});
 		
 	});
