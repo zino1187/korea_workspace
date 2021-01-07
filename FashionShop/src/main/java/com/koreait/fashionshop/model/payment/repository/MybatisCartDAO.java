@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
+import com.koreait.fashionshop.model.domain.Member;
 
 @Repository
 public class MybatisCartDAO implements CartDAO{
@@ -59,5 +60,16 @@ public class MybatisCartDAO implements CartDAO{
 		// TODO Auto-generated method stub
 		
 	}
-
+	@Override
+	public void delete(Member member) throws CartException{
+		int result=sqlSessionTemplate.delete("Cart.delete", member.getMember_id());
+		if(result==0) {
+			throw new CartException("장바구니 삭제 실패");
+		}
+	}
 }
+
+
+
+
+

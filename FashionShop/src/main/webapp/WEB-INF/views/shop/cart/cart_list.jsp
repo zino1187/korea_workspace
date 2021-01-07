@@ -1,3 +1,4 @@
+<%@page import="com.koreait.fashionshop.common.Formatter"%>
 <%@page import="com.koreait.fashionshop.model.domain.Cart"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
@@ -15,6 +16,18 @@
     <!-- Title  -->
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
+	<script>
+	function delCart(){
+		if(confirm("장바구니를 모두 비우시겠습니까?")){
+			location.href="/shop/cart/del";
+		}	
+	}
+	
+	function editCart(){
+		
+	}
+	
+	</script>
 </head>
 
 <body>
@@ -37,21 +50,25 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                	<%int sum=0; //합계 %>
                                     <%for(Cart cart : cartList){ %>
                                     <tr>
                                         <td class="cart_product_img d-flex align-items-center">
-                                            <a href="#"><img src="/resources/img/product-img/product-9.jpg" alt="Product"></a>
-                                            <h6>Yellow Cocktail Dress</h6>
+                                            <a href="#"><img src="/resources/data/basic/<%=cart.getProduct_id() %>.<%=cart.getFilename()%>" alt="Product"></a>
+                                            <h6><%=cart.getSubCategory().getName() %> > <%=cart.getProduct_name() %> </h6>
                                         </td>
-                                        <td class="price"><span>$49.88</span></td>
+                                        <td class="price"><span><%=Formatter.getCurrency(cart.getPrice()) %></span></td>
                                         <td class="qty">
                                             <div class="quantity">
                                                 <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="1">
+                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="<%=cart.getQuantity()%>">
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
-                                        <td class="total_price"><span>$49.88</span></td>
+                                        <%
+                                        	sum = sum + (cart.getPrice()*cart.getQuantity());
+                                        %>
+                                        <td class="total_price"><span><%=Formatter.getCurrency(cart.getPrice()*cart.getQuantity()) %></span></td>
                                     </tr>
                                     <%} %>
                                 </tbody>
@@ -63,8 +80,8 @@
                                 <a href="shop-grid-left-sidebar.html">Continue shooping</a>
                             </div>
                             <div class="update-checkout w-50 text-right">
-                                <a href="#">clear cart</a>
-                                <a href="#">Update cart</a>
+                                <a href="javascript:delCart()">clear cart</a>
+                                <a href="javascript:editCart()">Update cart</a>
                             </div>
                         </div>
 
@@ -115,9 +132,9 @@
                             </div>
 
                             <ul class="cart-total-chart">
-                                <li><span>Subtotal</span> <span>$59.90</span></li>
+                                <li><span>Subtotal</span> <span><%=Formatter.getCurrency(sum) %></span></li>
                                 <li><span>Shipping</span> <span>Free</span></li>
-                                <li><span><strong>Total</strong></span> <span><strong>$59.90</strong></span></li>
+                                <li><span><strong>Total</strong></span> <span><strong><%=Formatter.getCurrency(sum) %></strong></span></li>
                             </ul>
                             <a href="checkout.html" class="btn karl-checkout-btn">Proceed to checkout</a>
                         </div>

@@ -79,6 +79,18 @@ public class PaymentController {
 	}
 	
 	
+	//장바구니 비우기 
+	@RequestMapping(value="/shop/cart/del", method=RequestMethod.GET)
+	public String delCart(HttpSession session){
+		//장바구니를 삭제하기 위해서는, 로그인한 회원만 가능..
+		if(session.getAttribute("member")==null) {
+			throw new LoginRequiredException("로그인이 필요한 서비스입니다");
+		}
+		paymentService.delete((Member)session.getAttribute("member"));
+		
+		return "redirect:/shop/cart/list";
+	}
+	
 	//장바구니와 관련된 예외처리 핸들러
 	@ExceptionHandler(CartException.class)
 	@ResponseBody

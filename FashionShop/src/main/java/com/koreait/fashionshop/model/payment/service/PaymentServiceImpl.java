@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
+import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.payment.repository.CartDAO;
 
 @Service
@@ -48,5 +49,15 @@ public class PaymentServiceImpl implements PaymentService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void delete(Member member) throws CartException{
+		cartDAO.delete(member);
+	}
 	
 }
+
+
+
+
+
+

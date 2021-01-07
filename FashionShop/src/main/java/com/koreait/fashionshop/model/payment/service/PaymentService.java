@@ -2,9 +2,8 @@ package com.koreait.fashionshop.model.payment.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
-
 import com.koreait.fashionshop.model.domain.Cart;
+import com.koreait.fashionshop.model.domain.Member;
 
 public interface PaymentService {
 	//장바구니 관련 업무
@@ -13,7 +12,8 @@ public interface PaymentService {
 	public Cart selectCart(int cart_id);
 	public void insert(Cart cart);
 	public void update(Cart cart);
-	public void delete(Cart cart); //회원id에 속한 데이터 삭제할예정
+	public void delete(Cart cart); //pk에 속한 데이터 삭제할예정
+	public void delete(Member member); //회원에 속한 데이터 삭제할예정
 	
 	//결제 업무
 }
