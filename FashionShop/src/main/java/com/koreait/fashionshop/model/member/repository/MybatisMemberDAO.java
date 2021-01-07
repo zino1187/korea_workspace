@@ -22,13 +22,12 @@ public class MybatisMemberDAO implements MemberDAO{
 	}
 
 	//로그인 검증
-	public Member select(Member member) {
-		
+	public Member select(Member member) throws MemberNotFoundException{
 		Member obj=sqlSessionTemplate.selectOne("Member.select", member);
 		if(obj==null) { //올바르지 않은 정보로 회원을 조회하려고 하는 것임..
 			throw new MemberNotFoundException("로그인 정보가 올바르지 않습니다");
 		}
-		return null;
+		return obj;
 	}
 
 	@Override

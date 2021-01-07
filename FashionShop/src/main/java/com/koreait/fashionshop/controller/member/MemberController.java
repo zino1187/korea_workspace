@@ -2,6 +2,9 @@ package com.koreait.fashionshop.controller.member;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.exception.MailSendException;
+import com.koreait.fashionshop.exception.MemberNotFoundException;
 import com.koreait.fashionshop.exception.MemberRegistException;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.member.service.MemberService;
@@ -72,13 +76,15 @@ public class MemberController {
 	
 	//로그인 요청 처리
 	@RequestMapping(value="/shop/member/login", method=RequestMethod.POST)
-	public ModelAndView login(Member member) {
+	public String login(Member member, HttpServletRequest request) {
 		//db에 존재여부 확인 
+		Member obj=memberService.select(member);
 		
-		//존재 O : 세션에 회원정보 담아두기 
-		//존재 X : 예외로 처리..
+		//존재 O : 세션에 회원정보 담아두기
+		HttpSession session=request.getSession();
+		session.setAttribute("member", obj); //현재 클라이언트 요청과 연계된 세션에 보관해 놓는다
 		
-		return null;
+		return "redirect:/";
 	}
 	
 	
@@ -99,6 +105,18 @@ public class MemberController {
 	public ModelAndView handleException(MailSendException e) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg", e.getMessage()); //사용자가 보게될 에러 메시지
+		mav.setViewName("shop/error/result");
+		return mav;
+	}
+
+	@ExceptionHandler(MemberNotFoundException.class)
+	public ModelAndView handleException(MemberNotFoundException e) {
+		
+		ModelAndView mav = new ModelAndView();
+		
+		List topList = topCategoryService.selectAll();
+		mav.addObject("topList", topList); //담기
+		mav.addObject("msg", e.getMessage());
 		mav.setViewName("shop/error/result");
 		return mav;
 	}
