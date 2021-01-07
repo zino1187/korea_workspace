@@ -127,7 +127,7 @@
                                             	<%if(session.getAttribute("member")==null){ //세션에 담겨진 데이터가 없다면%>
                                             		<a class="nav-link" href="/shop/member/loginForm">SignIn</a>
                                             	<%}else{ %>
-                                            		<a class="nav-link" href="/shop/member/loginout">SignOut</a>
+                                            		<a class="nav-link" href="/shop/member/logout">SignOut</a>
                                             	<%} %>
                                             </li>
                                         </ul>
