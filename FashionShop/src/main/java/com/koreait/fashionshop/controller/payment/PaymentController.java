@@ -1,5 +1,7 @@
 package com.koreait.fashionshop.controller.payment;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +10,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.common.MessageData;
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
 import com.koreait.fashionshop.model.payment.service.PaymentService;
+import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
 @Controller
 public class PaymentController {
@@ -20,6 +24,10 @@ public class PaymentController {
 	
 	@Autowired
 	private PaymentService paymentService;
+	
+	@Autowired
+	private TopCategoryService topCategoryService;
+	
 	
 	//장바구니에 상품 담기 요청 
 	@RequestMapping(value="/shop/cart/regist", method=RequestMethod.POST)
@@ -38,6 +46,18 @@ public class PaymentController {
 		
 		return messageData;
 	}
+	
+	//장바구니 목록 요청 
+	@RequestMapping(value="/shop/cart/list", method=RequestMethod.GET)
+	public ModelAndView getCartList() {
+		List topList = topCategoryService.selectAll();
+		
+		ModelAndView mav = new ModelAndView("shop/cart/cart_list");
+		mav.addObject("topList", topList);
+		
+		return mav;
+	}
+	
 	
 	//장바구니와 관련된 예외처리 핸들러
 	@ExceptionHandler(CartException.class)

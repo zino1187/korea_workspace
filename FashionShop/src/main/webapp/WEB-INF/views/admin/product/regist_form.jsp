@@ -117,7 +117,10 @@ $(function(){
 		//대상 요소 배열에서 삭제
 		//삭제전에 uploadFiles 라는 배열에 들어있는 file의 index를 구하자!!
 		var f = uploadFiles[e.target.id];
+		console.log("지우려 하는 요소의 id는 ", e.target.id);
+		
 		var index = uploadFiles.indexOf(f); //파일 객체가 몇번째 들어있는지 추출
+		console.log("지우려 하는 요소의의 배열에서의 index는  ", index);
 		
 		//alert(e.target.id+"클릭햇어?");
 		uploadFiles.splice(index ,1);
