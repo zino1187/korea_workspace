@@ -1,5 +1,7 @@
 package com.koreait.fashionshop.controller.member;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.koreait.fashionshop.exception.MailSendException;
 import com.koreait.fashionshop.exception.MemberRegistException;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.member.service.MemberService;
+import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
 @Controller
 public class MemberController {
@@ -22,11 +25,16 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@Autowired
+	private TopCategoryService topCategoryService;
+	
 	//회원가입폼 요청 
 	@RequestMapping(value="/shop/member/registForm", method=RequestMethod.GET)
-	public String getRegistForm() {
-		
-		return "shop/member/signup";
+	public ModelAndView getRegistForm() {
+		List topList = topCategoryService.selectAll();
+		ModelAndView mav = new ModelAndView("shop/member/signup");
+		mav.addObject("topList", topList); //담기
+		return mav;
 	}
 	
 	//회원가입 요청 처리 
@@ -52,6 +60,28 @@ public class MemberController {
 		return sb.toString();
 	} 
 
+	//로그인 홈 요청 
+	@RequestMapping(value="/shop/member/loginForm", method=RequestMethod.GET)
+	public ModelAndView getLoginForm() {
+		List topList = topCategoryService.selectAll();
+		ModelAndView mav = new ModelAndView("shop/member/signin");
+		mav.addObject("topList", topList); //담기
+		
+		return mav;
+	}
+	
+	//로그인 요청 처리
+	@RequestMapping(value="/shop/member/login", method=RequestMethod.POST)
+	public ModelAndView login(Member member) {
+		//db에 존재여부 확인 
+		
+		//존재 O : 세션에 회원정보 담아두기 
+		//존재 X : 예외로 처리..
+		
+		return null;
+	}
+	
+	
 	//예외 핸들러 2가지 처리
 	@ExceptionHandler(MemberRegistException.class)
 	@ResponseBody

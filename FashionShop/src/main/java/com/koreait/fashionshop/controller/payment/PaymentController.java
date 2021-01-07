@@ -44,7 +44,7 @@ public class PaymentController {
 	@ResponseBody
 	public MessageData handleException(CartException e) {
 		MessageData messageData = new MessageData();
-		messageData.setResultCode(1);
+		messageData.setResultCode(0);
 		messageData.setMsg(e.getMessage());
 		
 		return messageData;

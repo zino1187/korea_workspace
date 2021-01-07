@@ -37,7 +37,7 @@ public class MybatisCartDAO implements CartDAO{
 		List list = sqlSessionTemplate.selectList("Cart.duplicateCheck", cart);
 		
 		if(list.size()>0) { //이미 담겨진 상품이 있다는 의미...
-			throw new CartException("장바구니에 이미 상품이 담겨있습니다");
+			throw new CartException("장바구니에 이미 담겨진 상품입니다");
 		}
 	}
 	

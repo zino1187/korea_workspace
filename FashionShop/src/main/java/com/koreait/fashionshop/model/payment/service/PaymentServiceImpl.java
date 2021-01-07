@@ -34,6 +34,7 @@ public class PaymentServiceImpl implements PaymentService{
 
 	@Override
 	public void insert(Cart cart) throws CartException{
+		cartDAO.duplicateCheck(cart);
 		cartDAO.insert(cart);
 	}
 
