@@ -122,7 +122,14 @@
                                             <li class="nav-item"><a class="nav-link" href="/shop/cart/list"><span class="karl-level">3</span>Cart</a></li>
                                             <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                                             <li class="nav-item"><a class="nav-link" href="/shop/member/registForm">SignUp</a></li>
-                                            <li class="nav-item"><a class="nav-link" href="/shop/member/loginForm">SignIn</a></li>
+                                            <li class="nav-item">
+                                            
+                                            	<%if(session.getAttribute("member")==null){ //세션에 담겨진 데이터가 없다면%>
+                                            		<a class="nav-link" href="/shop/member/loginForm">SignIn</a>
+                                            	<%}else{ %>
+                                            		<a class="nav-link" href="/shop/member/loginout">SignOut</a>
+                                            	<%} %>
+                                            </li>
                                         </ul>
                                     </div>
                                 </nav>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.koreait.fashionshop.common.MessageData;
 import com.koreait.fashionshop.exception.MailSendException;
 import com.koreait.fashionshop.exception.MemberNotFoundException;
 import com.koreait.fashionshop.exception.MemberRegistException;
@@ -87,6 +88,19 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	//로그아웃 요청 처리 
+	@RequestMapping(value="/shop/member/logout", method=RequestMethod.GET)
+	public ModelAndView logout(HttpServletRequest request) {
+		request.getSession().invalidate(); //세션 무효화, 이시점부터 담겨진 데이터가 다 무효가 된다
+		MessageData messageData = new MessageData();
+		messageData.setResultCode(1);
+		messageData.setMsg("로그아웃 되었습니다");
+		messageData.setUrl("/");
+		
+		ModelAndView mav = new ModelAndView("shop/error/message");
+		mav.addObject("messageData", messageData);
+		return mav;
+	}
 	
 	//예외 핸들러 2가지 처리
 	@ExceptionHandler(MemberRegistException.class)
