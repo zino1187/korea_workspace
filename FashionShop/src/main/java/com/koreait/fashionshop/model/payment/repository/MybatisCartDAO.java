@@ -22,8 +22,7 @@ public class MybatisCartDAO implements CartDAO{
 
 	@Override
 	public List selectAll(int member_id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSessionTemplate.selectList("Cart.selectAll", member_id);
 	}
 
 	@Override

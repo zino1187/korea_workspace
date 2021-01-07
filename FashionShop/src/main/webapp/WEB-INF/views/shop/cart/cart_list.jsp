@@ -1,4 +1,8 @@
+<%@page import="com.koreait.fashionshop.model.domain.Cart"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+	List<Cart> cartList = (List)request.getAttribute("cartList");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +37,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <%for(Cart cart : cartList){ %>
                                     <tr>
                                         <td class="cart_product_img d-flex align-items-center">
                                             <a href="#"><img src="/resources/img/product-img/product-9.jpg" alt="Product"></a>
@@ -48,6 +53,7 @@
                                         </td>
                                         <td class="total_price"><span>$49.88</span></td>
                                     </tr>
+                                    <%} %>
                                 </tbody>
                             </table>
                         </div>

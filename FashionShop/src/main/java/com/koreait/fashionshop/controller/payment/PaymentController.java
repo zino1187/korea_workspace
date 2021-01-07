@@ -2,6 +2,8 @@ package com.koreait.fashionshop.controller.payment;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.koreait.fashionshop.common.MessageData;
 import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
+import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.payment.service.PaymentService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
@@ -49,11 +52,14 @@ public class PaymentController {
 	
 	//장바구니 목록 요청 
 	@RequestMapping(value="/shop/cart/list", method=RequestMethod.GET)
-	public ModelAndView getCartList() {
+	public ModelAndView getCartList(HttpSession session) {
+		Member member = (Member)session.getAttribute("member");
 		List topList = topCategoryService.selectAll();
+		List cartList = paymentService.selectCartList(member.getMember_id());
 		
 		ModelAndView mav = new ModelAndView("shop/cart/cart_list");
 		mav.addObject("topList", topList);
+		mav.addObject("cartList", cartList);
 		
 		return mav;
 	}
