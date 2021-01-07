@@ -1,5 +1,6 @@
 package com.koreait.fashionshop.controller.payment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,11 +93,38 @@ public class PaymentController {
 		return "redirect:/shop/cart/list";
 	}
 	
+	@RequestMapping(value="/shop/cart/edit", method=RequestMethod.POST)
+	public ModelAndView editCart(@RequestParam("cart_id") int[] cartArray, @RequestParam("quantity") int[] qArray) {
+		//넘겨받은 파라미터 출력하기!!  cart_id,  quantity 
+		logger.debug("cartArray length "+cartArray.length);
+		
+		List cartList = new ArrayList();
+		for(int i=0;i<cartArray.length;i++) {
+			Cart cart  = new Cart();
+			cart.setCart_id(cartArray[i]);
+			cart.setQuantity(qArray[i]);
+			cartList.add(cart);
+		}
+		paymentService.update(cartList);
+		
+		//수정되었다는 메시지를 보고싶다면.. message.jsp로 응답하자
+		MessageData messageData = new MessageData();
+		messageData.setResultCode(1);
+		messageData.setMsg("장바구니가 수정되었습니다");
+		messageData.setUrl("/shop/cart/list");
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("messageData", messageData);
+		mav.setViewName("shop/error/message");
+		
+		return mav;
+	}
+	
+	
 	//장바구니와 관련된 예외처리 핸들러
 	@ExceptionHandler(CartException.class)
 	@ResponseBody
 	public MessageData handleException(CartException e) {
-		logger.debug("핸들러 동작함 ", e.getMessage());
+		logger.debug("핸들러 동작함 "+ e.getMessage());
 		MessageData messageData = new MessageData();
 		messageData.setResultCode(0);
 		messageData.setMsg(e.getMessage());

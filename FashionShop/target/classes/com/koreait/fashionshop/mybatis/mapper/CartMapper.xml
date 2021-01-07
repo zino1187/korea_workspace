@@ -41,8 +41,19 @@
 	<delete id="delete" parameterType="int">
 		delete from cart where member_id=#{member_id}
 	</delete>
-					
+	
+	<!-- 장바구니 수량 수정  -->
+	<update id="update" parameterType="Cart">
+		update cart set quantity=#{quantity} where cart_id=#{cart_id}		
+	</update>					
 </mapper>
+
+
+
+
+
+
+
 
 
 

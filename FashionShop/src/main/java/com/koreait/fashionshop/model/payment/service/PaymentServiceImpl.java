@@ -39,9 +39,11 @@ public class PaymentServiceImpl implements PaymentService{
 	}
 
 	@Override
-	public void update(Cart cart) {
-		// TODO Auto-generated method stub
-		
+	public void update(List<Cart> cartList) throws CartException{
+		//상품 갯수만큼 수정 요청 
+		for(Cart cart : cartList) {
+			cartDAO.update(cart);
+		}
 	}
 
 	@Override

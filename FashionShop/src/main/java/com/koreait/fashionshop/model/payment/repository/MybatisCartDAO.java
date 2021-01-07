@@ -50,8 +50,11 @@ public class MybatisCartDAO implements CartDAO{
 	}
 
 	@Override
-	public void update(Cart cart) {
-		// TODO Auto-generated method stub
+	public void update(Cart cart) throws CartException{
+		int result = sqlSessionTemplate.update("Cart.update", cart);
+		if(result==0) {
+			throw new CartException("장바구니 수정 실패");
+		}
 		
 	}
 
@@ -67,6 +70,8 @@ public class MybatisCartDAO implements CartDAO{
 			throw new CartException("장바구니 삭제 실패");
 		}
 	}
+	
+	
 }
 
 

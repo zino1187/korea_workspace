@@ -24,6 +24,13 @@
 	}
 	
 	function editCart(){
+		if(confirm("주문 수량을 변경하시겠어요?")){
+			$("#cart-form").attr({
+				action:"/shop/cart/edit",
+				method:"post"
+			});
+			$("#cart-form").submit();
+		}	
 		
 	}
 	
@@ -37,6 +44,7 @@
         <!-- ****** Cart Area Start ****** -->
         <div class="cart_area section_padding_100 clearfix">
             <div class="container">
+            	<form id="cart-form">
                 <div class="row">
                     <div class="col-12">
                         <div class="cart-table clearfix">
@@ -61,7 +69,8 @@
                                         <td class="qty">
                                             <div class="quantity">
                                                 <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                                                <input type="number" class="qty-text" id="qty" step="1" min="1" max="99" name="quantity" value="<%=cart.getQuantity()%>">
+                                                <input type="hidden" name="cart_id" value="<%=cart.getCart_id()%>">
+                                                <input type="number" name="quantity" class="qty-text" id="qty" step="1" min="1" max="99"  value="<%=cart.getQuantity()%>">
                                                 <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-plus" aria-hidden="true"></i></span>
                                             </div>
                                         </td>
@@ -87,7 +96,8 @@
 
                     </div>
                 </div>
-
+				</form>
+				
                 <div class="row">
                     <div class="col-12 col-md-6 col-lg-4">
                         <div class="coupon-code-area mt-70">
