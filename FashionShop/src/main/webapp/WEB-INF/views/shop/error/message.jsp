@@ -8,13 +8,12 @@
 <html lang="en">
 <head>
 <script type="text/javascript">
-<%if(messageData.getResultCode()==1){%>
 	alert("<%=messageData.getMsg()%>");
-	location.href="<%=messageData.getUrl()%>";
-<%}else{%>
-	alert("<%=messageData.getMsg()%>");
-<%}%>
-
+	<%if(messageData.getResultCode()==1){%>
+		location.href="<%=messageData.getUrl()%>";
+	<%}else{%>
+		history.back();
+	<%}%>
 </script>
 </head>
 <body>

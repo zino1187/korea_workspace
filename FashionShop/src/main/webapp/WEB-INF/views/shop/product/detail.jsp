@@ -23,6 +23,8 @@
 		function addCart(){
 			var formData=$("#cart_form").serialize();//파라미터를 전송할 수 있는 상태의 문자열로 나열해줌
 			
+			alert("check");
+			
 			$.ajax({
 				url:"/shop/cart/regist",
 				type:"post", 
