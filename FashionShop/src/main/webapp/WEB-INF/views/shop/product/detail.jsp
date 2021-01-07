@@ -28,7 +28,13 @@
 				type:"post", 
 				data:formData,
 				success:function(responseData){
-					alert(responseData);
+					if(responseData.resultCode==1){
+						if(confirm(responseData.msg+"\n장바구니에 담긴 상품을 보러갈까요?")){
+							location.href=responseData.url;							
+						}
+					}else{
+						alert(responseData.msg);
+					}
 				}
 			});
 		}

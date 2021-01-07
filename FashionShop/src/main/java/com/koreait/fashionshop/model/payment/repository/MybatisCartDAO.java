@@ -31,7 +31,16 @@ public class MybatisCartDAO implements CartDAO{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public void duplicateCheck(Cart cart) throws CartException{
+		List list = sqlSessionTemplate.selectList("Cart.duplicateCheck", cart);
+		
+		if(list.size()>0) { //이미 담겨진 상품이 있다는 의미...
+			throw new CartException("장바구니에 이미 상품이 담겨있습니다");
+		}
+	}
+	
 	@Override
 	public void insert(Cart cart) throws CartException{
 		int result=sqlSessionTemplate.insert("Cart.insert", cart);

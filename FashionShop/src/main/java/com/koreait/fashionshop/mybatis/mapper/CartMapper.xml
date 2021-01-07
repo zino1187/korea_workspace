@@ -7,4 +7,9 @@
 		values(seq_cart.nextval, #{product_id}, #{member_id}, #{quantity})
 	</insert>	
 		
+	<!-- 장바구니 중복여부 체크  -->
+	<select id="duplicateCheck" parameterType="Cart" resultType="Cart">
+		select * from cart where member_id=#{member_id} and product_id=#{product_id}
+	</select>
+			
 </mapper>
