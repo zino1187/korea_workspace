@@ -157,7 +157,14 @@ create table  order_summary(
 	, paymethod_id number
 	, constraint fk_order_state_order_summary 
 		foreign key(order_state_id) references order_state(order_state_id)
+		
+	, constraint fk_member_order_summary 
+		foreign key(member_id) references member(member_id)
+		
+	, constraint fk_paymethod_order_summary 
+		foreign key(paymethod_id) references paymethod(paymethod_id)
 );
+
 
 create table receiver(
    receiver_id number primary key 
