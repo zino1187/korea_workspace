@@ -127,13 +127,18 @@ public class PaymentController {
 	
 	//체크아웃 페이지 요청 
 	@GetMapping("/shop/payment/form")
-	public String payForm(Model model) {
+	public String payForm(Model model, HttpSession session) {
 		List topList = topCategoryService.selectAll();
 		model.addAttribute("topList", topList); //ModelAndView에서의 Model만 사용..
 		
 		//결제수단 가져오기 
 		List paymethodList = paymentService.selectPaymethodList();
 		model.addAttribute("paymethodList", paymethodList);
+		
+		//장바구니 정보도 가져오기 
+		Member member =(Member)session.getAttribute("member");
+		List cartList = paymentService.selectCartList(member.getMember_id());
+		model.addAttribute("cartList", cartList);
 		
 		return "shop/payment/checkout";
 	}
@@ -147,6 +152,8 @@ public class PaymentController {
 		logger.debug("결제방법은 "+orderSummary.getPaymethod_id());
 		logger.debug("total_price "+orderSummary.getTotal_price());
 		logger.debug("total_pay "+orderSummary.getTotal_pay());
+		
+		
 		
 		return "";
 	}

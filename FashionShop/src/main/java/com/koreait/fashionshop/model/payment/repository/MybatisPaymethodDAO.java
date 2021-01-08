@@ -14,6 +14,8 @@ public class MybatisPaymethodDAO implements PaymethodDAO{
 	public List selectAll() {
 		return sqlSessionTemplate.selectList("Paymethod.selectAll");
 	}
+	
+	
 }
 
 

@@ -7,6 +7,13 @@
 	List<Cart> cartList = (List)request.getAttribute("cartList");
 	List<Paymethod> paymethodList = (List)request.getAttribute("paymethodList");
 	Member member=(Member)session.getAttribute("member");
+	
+	//장바구니로부터, 상품 가액 계산
+	int totalPrice=0;
+	for(Cart cart : cartList){
+		totalPrice += (cart.getQuantity() * cart.getPrice());
+	}
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,8 +71,8 @@
                             </div>
 
                             <form id="checkout-form">
-                            	<input type="hidden" name="total_price" value="15000">
-                            	<input type="hidden" name="total_pay" value="10000">
+                            	<input type="hidden" name="total_price" value="<%=totalPrice%>">
+                            	<input type="hidden" name="total_pay" value="<%=totalPrice%>">
                             	
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
@@ -103,7 +110,7 @@
                                     
                                     <div class="col-12 mb-3">
                                         <label for="country">결제방법 선택<span>*</span></label>
-                                        <select class="custom-select d-block w-100" id="country">
+                                        <select class="custom-select d-block w-100" id="country" name="paymethod_id">
                                         <%for(Paymethod paymethod : paymethodList){ %>
                                         <option value="<%=paymethod.getPaymethod_id()%>"><%=paymethod.getMethod() %></option>
 										<%} %>
