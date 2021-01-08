@@ -93,6 +93,7 @@ public class PaymentController {
 		return "redirect:/shop/cart/list";
 	}
 	
+	
 	@RequestMapping(value="/shop/cart/edit", method=RequestMethod.POST)
 	public ModelAndView editCart(@RequestParam("cart_id") int[] cartArray, @RequestParam("quantity") int[] qArray) {
 		//넘겨받은 파라미터 출력하기!!  cart_id,  quantity 
@@ -118,6 +119,7 @@ public class PaymentController {
 		
 		return mav;
 	}
+	
 	
 	
 	//장바구니와 관련된 예외처리 핸들러
