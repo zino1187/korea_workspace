@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.koreait.fashionshop.common.Bell;
+import com.koreait.fashionshop.exception.WithdrawFailException;
+import com.koreait.fashionshop.model.common.Bell;
 
 @Repository
 public class JdbcKbankDAO implements KbankDAO{
@@ -16,8 +17,11 @@ public class JdbcKbankDAO implements KbankDAO{
 	//         그렇다면 결합도 마저도 없애버리는 방법이 있는가? O AOP
 	
 	//출금
-	public void withdraw(int money) {		
-		jdbcTemplate.update("update kbank set total=total-?", money);
+	public void withdraw(int money) throws WithdrawFailException{		
+		int result = jdbcTemplate.update("update kbank set total=total-?", money);
+		if(result==0) {
+			throw new WithdrawFailException("Sorry Withdraw fail");
+		}
 	}
 	
 }
