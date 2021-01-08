@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,8 @@ import com.koreait.fashionshop.exception.LoginRequiredException;
 import com.koreait.fashionshop.model.common.MessageData;
 import com.koreait.fashionshop.model.domain.Cart;
 import com.koreait.fashionshop.model.domain.Member;
+import com.koreait.fashionshop.model.domain.OrderSummary;
+import com.koreait.fashionshop.model.domain.Receiver;
 import com.koreait.fashionshop.model.payment.service.PaymentService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
 
@@ -128,7 +131,24 @@ public class PaymentController {
 		List topList = topCategoryService.selectAll();
 		model.addAttribute("topList", topList); //ModelAndView에서의 Model만 사용..
 		
+		//결제수단 가져오기 
+		List paymethodList = paymentService.selectPaymethodList();
+		model.addAttribute("paymethodList", paymethodList);
+		
 		return "shop/payment/checkout";
+	}
+	
+	//결제요청 처리
+	@PostMapping("/shop/payment/regist")
+	public String pay(Receiver receiver, OrderSummary orderSummary ) {
+		logger.debug("받을 사람 이름 "+receiver.getReceiver_name());
+		logger.debug("받을 사람 연락처 "+receiver.getReceiver_phone());
+		logger.debug("받을 사람 주소 "+receiver.getReceiver_addr());
+		logger.debug("결제방법은 "+orderSummary.getPaymethod_id());
+		logger.debug("total_price "+orderSummary.getTotal_price());
+		logger.debug("total_pay "+orderSummary.getTotal_pay());
+		
+		return "";
 	}
 	
 	

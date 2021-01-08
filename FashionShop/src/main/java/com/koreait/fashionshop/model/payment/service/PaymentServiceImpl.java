@@ -9,11 +9,15 @@ import com.koreait.fashionshop.exception.CartException;
 import com.koreait.fashionshop.model.domain.Cart;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.payment.repository.CartDAO;
+import com.koreait.fashionshop.model.payment.repository.PaymethodDAO;
 
 @Service
 public class PaymentServiceImpl implements PaymentService{
 	@Autowired
 	private CartDAO cartDAO;
+	
+	@Autowired
+	private PaymethodDAO paymethodDAO;
 	
 	@Override
 	public List selectCartList() {
@@ -56,7 +60,12 @@ public class PaymentServiceImpl implements PaymentService{
 		cartDAO.delete(member);
 	}
 	
+	@Override
+	public List selectPaymethodList() {
+		return paymethodDAO.selectAll();
+	}
 }
+
 
 
 

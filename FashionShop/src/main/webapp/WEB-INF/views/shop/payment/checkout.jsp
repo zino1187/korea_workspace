@@ -1,8 +1,12 @@
+<%@page import="com.koreait.fashionshop.model.domain.Member"%>
+<%@page import="com.koreait.fashionshop.model.domain.Paymethod"%>
 <%@page import="com.koreait.fashionshop.model.common.Formatter"%>
 <%@page import="com.koreait.fashionshop.model.domain.Cart"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%
 	List<Cart> cartList = (List)request.getAttribute("cartList");
+	List<Paymethod> paymethodList = (List)request.getAttribute("paymethodList");
+	Member member=(Member)session.getAttribute("member");
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,23 +21,28 @@
     <title>Karl - Fashion Ecommerce Template | Home</title>
 	<%@ include file="../inc/header.jsp" %>
 	<script>
-	function delCart(){
-		if(confirm("장바구니를 모두 비우시겠습니까?")){
-			location.href="/shop/cart/del";
-		}	
-	}
-	
-	function editCart(){
-		if(confirm("주문 수량을 변경하시겠어요?")){
-			$("#cart-form").attr({
-				action:"/shop/cart/edit",
-				method:"post"
-			});
-			$("#cart-form").submit();
-		}	
+	function setData(ch){
+		var form=document.querySelector("#checkout-form");
 		
+		if(ch.checked){//체크를 했다면, 주문자 정보를 받는자 정보에 대입
+			form.receiver_name.value=form.member_name.value;
+			form.receiver_phone.value=form.member_phone.value;
+			form.receiver_addr.value=form.member_addr.value;
+		}else{
+			//받는 사람 정보를 다시 원상 복구(초기화)
+			form.receiver_name.value="";
+			form.receiver_phone.value="";
+			form.receiver_addr.value="";
+		}
 	}
 	
+	function order(){
+		$("#checkout-form").attr({
+			action:"/shop/payment/regist",
+			method:"post"
+		});
+		$("#checkout-form").submit();
+	}
 	</script>
 </head>
 
@@ -54,41 +63,50 @@
                                 <p>Enter your cupone code</p>
                             </div>
 
-                            <form action="#" method="post">
+                            <form id="checkout-form">
+                            	<input type="hidden" name="total_price" value="15000">
+                            	<input type="hidden" name="total_pay" value="10000">
+                            	
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <label for="first_name">주문고객 명<span>*</span></label>
-                                        <input type="text" class="form-control" id="first_name" value="" required>
+                                        <label for="member_name">주문고객 명<span>*</span></label>
+                                        <input type="text" class="form-control" id="member_name"  value="<%=member.getName() %>" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="last_name">연락처 <span>*</span></label>
-                                        <input type="text" class="form-control" id="last_name" value="" required>
+                                        <label for="member_phone">연락처 <span>*</span></label>
+                                        <input type="text" class="form-control" id="member_phone" value="010-8888-9999" required>
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="company">주소</label>
-                                        <input type="text" class="form-control" id="company" value="">
+                                        <label for="member_addr">주소</label>
+                                        <input type="text" class="form-control" id="member_addr" value="<%=member.getAddr()%>">
                                     </div>
                                     
+									<div class="col-12 mb-3">
+	                                    <div class="custom-control custom-checkbox d-block mb-2">
+	                                            <input type="checkbox" class="custom-control-input" id="customCheck1" onClick="setData(this)">
+	                                            <label class="custom-control-label" for="customCheck1">주문자와 동일</label>
+	                                    </div>
+                                    </div>
+
                                     <div class="col-md-6 mb-3">
                                         <label for="first_name">받으실분 이름<span>*</span></label>
-                                        <input type="text" class="form-control" id="first_name" value="" required>
+                                        <input type="text" class="form-control" id="first_name" name="receiver_name" value="" required>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="last_name">연락처 <span>*</span></label>
-                                        <input type="text" class="form-control" id="last_name" value="" required>
+                                        <input type="text" class="form-control" id="last_name" name="receiver_phone" value="" required>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="company">받으실 주소</label>
-                                        <input type="text" class="form-control" id="company" value="">
+                                        <input type="text" class="form-control" id="company" name="receiver_addr" value="">
                                     </div>
                                     
                                     <div class="col-12 mb-3">
                                         <label for="country">결제방법 선택<span>*</span></label>
                                         <select class="custom-select d-block w-100" id="country">
-                                        <option value="usa">United States</option>
-                                        <option value="uk">United Kingdom</option>
-                                        <option value="ger">Germany</option>
-                                        <option value="fra">France</option>
+                                        <%for(Paymethod paymethod : paymethodList){ %>
+                                        <option value="<%=paymethod.getPaymethod_id()%>"><%=paymethod.getMethod() %></option>
+										<%} %>
                                     </select>
                                     </div>
 
@@ -129,7 +147,7 @@
 
                             
 
-                            <a href="#" class="btn karl-checkout-btn">Place Order</a>
+                            <a href="javascript:order()" class="btn karl-checkout-btn">Place Order</a>
                         </div>
                     </div>
 

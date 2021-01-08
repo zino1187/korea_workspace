@@ -16,6 +16,7 @@ public interface PaymentService {
 	public void delete(Member member); //회원에 속한 데이터 삭제할예정
 	
 	//결제 업무
+	public List selectPaymethodList();
 }
 
 
