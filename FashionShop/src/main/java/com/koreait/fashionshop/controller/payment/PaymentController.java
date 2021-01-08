@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,6 +122,14 @@ public class PaymentController {
 		return mav;
 	}
 	
+	//체크아웃 페이지 요청 
+	@GetMapping("/shop/payment/form")
+	public String payForm(Model model) {
+		List topList = topCategoryService.selectAll();
+		model.addAttribute("topList", topList); //ModelAndView에서의 Model만 사용..
+		
+		return "shop/payment/checkout";
+	}
 	
 	
 	//장바구니와 관련된 예외처리 핸들러

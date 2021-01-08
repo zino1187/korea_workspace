@@ -147,6 +147,11 @@ create table paymethod(
 	, method varchar(20)
 );
 
+order_summary 테이블 다시 만들고 싶으신 분은 drop을 3개하면 됨
+drop table receiver;
+drop table order_detail;
+drop table order_summary; 
+
 create table  order_summary(
 	order_summary_id number primary key 
 	, member_id number 
@@ -155,14 +160,9 @@ create table  order_summary(
 	, orderdate  date default sysdate 
 	, order_state_id number 
 	, paymethod_id number
-	, constraint fk_order_state_order_summary 
-		foreign key(order_state_id) references order_state(order_state_id)
-		
-	, constraint fk_member_order_summary 
-		foreign key(member_id) references member(member_id)
-		
-	, constraint fk_paymethod_order_summary 
-		foreign key(paymethod_id) references paymethod(paymethod_id)
+	, constraint fk_order_state_order_summary foreign key(order_state_id) references order_state(order_state_id)	
+	, constraint fk_member_order_summary foreign key(member_id) references member(member_id)
+	, constraint fk_paymethod_order_summary foreign key(paymethod_id) references paymethod(paymethod_id)
 );
 
 
