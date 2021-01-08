@@ -182,6 +182,27 @@ create table order_detail(
 		foreign key(product_id) references product(product_id)
 );
 
+create sequence  seq_order_state
+increment by 1
+start with 1;
+
+create sequence  seq_paymethod
+increment by 1
+start with 1;
+
+create sequence  seq_order_summary
+increment by 1
+start with 1;
+
+create sequence  seq_receiver
+increment by 1
+start with 1;
+
+create sequence  seq_order_detail
+increment by 1
+start with 1;
+
+
 
 
 
