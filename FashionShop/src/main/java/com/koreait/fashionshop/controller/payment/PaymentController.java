@@ -145,15 +145,17 @@ public class PaymentController {
 	
 	//결제요청 처리
 	@PostMapping("/shop/payment/regist")
-	public String pay(Receiver receiver, OrderSummary orderSummary ) {
+	public String pay(HttpSession session, OrderSummary orderSummary, Receiver receiver) {
 		logger.debug("받을 사람 이름 "+receiver.getReceiver_name());
 		logger.debug("받을 사람 연락처 "+receiver.getReceiver_phone());
 		logger.debug("받을 사람 주소 "+receiver.getReceiver_addr());
 		logger.debug("결제방법은 "+orderSummary.getPaymethod_id());
 		logger.debug("total_price "+orderSummary.getTotal_price());
 		logger.debug("total_pay "+orderSummary.getTotal_pay());
+		Member member=(Member)session.getAttribute("member");
+		orderSummary.setMember_id(member.getMember_id()); //회원 pk
 		
-		
+		paymentService.registOrder(orderSummary, receiver);
 		
 		return "";
 	}

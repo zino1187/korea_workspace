@@ -66,15 +66,18 @@
 	<!-- 트랜잭션 설정 -->
 	<tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
 		<tx:attributes>
-			<tx:method name="send" propagation="REQUIRED" rollback-for="Exception"/>
+			<!-- <tx:method name="send" propagation="REQUIRED" rollback-for="Exception"/> -->
+			<tx:method name="registOrder" propagation="REQUIRED" rollback-for="Exception"/>
 		</tx:attributes>
 	</tx:advice>
 	
 	<!-- 트랜잭션을 적용할 대상인 서비스 등록 -->
 	<aop:config>
-		<aop:pointcut expression="execution(public * com.koreait.fashionshop.model.bank.service..*(..))" id="txPointcut"/>
+		<aop:pointcut expression="execution(public * com.koreait.fashionshop.model.payment.service..*(..))" id="txPointcut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>				
 	</aop:config>	
+	
+	
 </beans>
 
 
