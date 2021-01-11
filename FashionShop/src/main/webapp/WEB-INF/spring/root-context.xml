@@ -53,15 +53,15 @@
 	<!-- 공통코드는 이미 어노테이션으로 등록되어 잇다..Bell -->
 	
 	<!-- 어느시점에, 어떤 메서드 호출시 공통코드를 동작시킬지를 xml로 서술해보자 -->
+<!-- 	
 	<aop:config>
 		<aop:aspect id="bellAspect" ref="bell">
-			<!-- 어떤 메서드 실행시 관여할지 서술 -->
+			어떤 메서드 실행시 관여할지 서술
 			<aop:pointcut expression="execution(public * com.koreait.fashionshop.model.bank.repository..*(**))" id="bellPointcut"/>
 			<aop:after method="sound" pointcut-ref="bellPointcut"/>
-			
 		</aop:aspect>			
 	</aop:config>		
-	
+ -->	
 	<!-- 방금 배운 AOP를 이용하여 트랜잭션 처리에 응용해보자!! -->
 	<!-- 트랜잭션 설정 -->
 	<tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
