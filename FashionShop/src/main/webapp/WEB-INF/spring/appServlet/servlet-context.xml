@@ -53,13 +53,14 @@
 	<beans:bean id="memberSessionCheckAspect" class="com.koreait.fashionshop.aop.MemberSessionCheckAspect"/>
 	
 	<aop:config>
+		<!-- 	
 		<aop:aspect id="bellAspect" ref="bell">
 			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.main..*(..))" id="bellPointcut"/>
 			<aop:before method="sound" pointcut-ref="bellPointcut"/>
 		</aop:aspect>
-		
+ 		-->		
 		<aop:aspect id="sessionCheckAspect" ref="memberSessionCheckAspect">
-			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.main..*(..))" id="sessionPointcut"/>
+			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.payment..*(..))" id="sessionPointcut"/>
 			<aop:around method="sessionCheck" pointcut-ref="sessionPointcut"/>
 		</aop:aspect>
 						

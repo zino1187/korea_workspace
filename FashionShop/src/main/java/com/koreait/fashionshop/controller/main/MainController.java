@@ -2,6 +2,8 @@ package com.koreait.fashionshop.controller.main;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ public class MainController {
 	private TopCategoryService topCategoryService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView main() {
+	public ModelAndView main(HttpServletRequest request, String name) {
 		ModelAndView mav = new ModelAndView();
 		
 		List topList = topCategoryService.selectAll();//카테고리들 가져오기
