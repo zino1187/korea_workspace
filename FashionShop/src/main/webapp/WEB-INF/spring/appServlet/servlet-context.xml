@@ -65,9 +65,11 @@
 			<aop:around method="sessionCheck" pointcut-ref="sessionPointcut"/>
 		</aop:aspect>
 		
-		<aop:aspect id=categoryAspect ref="globalDataAspect">
-			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.payment..*(..))" id="sessionPointcut"/>
-			<aop:around method="sessionCheck" pointcut-ref="sessionPointcut"/>
+		
+		<aop:aspect id="categoryAspect" ref="globalDataAspect">
+		
+			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller..*(..))" id="categoryPointcut"/>
+			<aop:around method="getGlobalData" pointcut-ref="categoryPointcut"/>
 		</aop:aspect>
 						
 	</aop:config>		
