@@ -168,18 +168,6 @@ public class PaymentController {
 		return messageData;
 	}
 	
-	@ExceptionHandler(LoginRequiredException.class)
-	public ModelAndView handleException(LoginRequiredException e) {
-		ModelAndView mav = new ModelAndView();
-		
-		MessageData messageData = new MessageData();
-		messageData.setResultCode(0);
-		messageData.setMsg(e.getMessage());
-		mav.addObject("messageData", messageData);
-		mav.setViewName("shop/error/message");
-		
-		return mav;
-	}
 	
 }
 
