@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Pager {
+	private List list;
 	private int totalRecord; //�? ?��코드 ?�� 
 	private int pageSize = 10; //?��?���??�� 보여�? ?��코드 ?�� 
 	private int totalPage;
@@ -24,6 +25,7 @@ public class Pager {
 	
 	//?��?��?�� �??�� 초기?��
 	public void init(HttpServletRequest request, List list) {
+		this.list=list; //보관
 		totalRecord = list.size();
 		totalPage = (int)Math.ceil((float)totalRecord/pageSize);
 		//?��?���?�? ?��?��?�� 경우?��, �? ?��?��?�� ?��?���?�? ??�?
@@ -36,7 +38,10 @@ public class Pager {
 		num = totalRecord - curPos; //?��?���??�� ?��?�� 번호
 	}
 
-
+	public List getList() {
+		return list;
+	}
+	
 	public int getTotalRecord() {
 		return totalRecord;
 	}

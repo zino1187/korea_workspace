@@ -37,6 +37,7 @@
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/OrderSummaryMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/OrderDetailMapper.xml"/>
 		<mapper resource="com/koreait/fashionshop/mybatis/mapper/ReceiverMapper.xml"/>
+		<mapper resource="com/koreait/fashionshop/mybatis/mapper/QnaMapper.xml"/>
 	</mappers>
 	
 </configuration>

@@ -1,4 +1,10 @@
+<%@page import="com.koreait.fashionshop.model.domain.Qna"%>
+<%@page import="com.koreait.fashionshop.model.common.Pager"%>
 <%@ page contentType="text/html;charset=UTF-8"%>
+<%
+	Pager pager = (Pager)request.getAttribute("pager");
+	List<Qna> qnaList = pager.getList();
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,6 +63,8 @@
 					<th>등록일</th>
 					<th>조회수</th>
 				</tr>
+				<%for(int i=0;i<qnaList.size();i++){ %>
+				<%Qna qna = qnaList.get(i); %>
 				<tr>
 					<td>Jill</td>
 					<td>Smith</td>
@@ -64,6 +72,7 @@
 					<td>50</td>
 					<td>50</td>
 				</tr>
+				<%}%>
 				<tr>
 					<td colspan="5">
 						<button onClick="location.href='/shop/cs/qna/registForm';">글등록</button>
