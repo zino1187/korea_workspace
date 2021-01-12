@@ -67,10 +67,10 @@
 				<%Qna qna = qnaList.get(i); %>
 				<tr>
 					<td>Jill</td>
-					<td>Smith</td>
-					<td>50</td>
-					<td>50</td>
-					<td>50</td>
+					<td><%=qna.getTitle() %></td>
+					<td><%=qna.getWriter() %></td>
+					<td><%=qna.getRegdate()%></td>
+					<td><%=qna.getHit() %></td>
 				</tr>
 				<%}%>
 				<tr>

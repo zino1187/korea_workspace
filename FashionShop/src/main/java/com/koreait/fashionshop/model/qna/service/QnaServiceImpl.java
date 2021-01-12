@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.fashionshop.exception.QnaDMLException;
 import com.koreait.fashionshop.model.common.Pager;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.domain.Qna;
@@ -33,9 +34,8 @@ public class QnaServiceImpl implements QnaService{
 	}
 
 	@Override
-	public void insert(Qna qna) {
-		// TODO Auto-generated method stub
-		
+	public void insert(Qna qna) throws QnaDMLException{
+		qnaDAO.insert(qna);		
 	}
 
 	@Override

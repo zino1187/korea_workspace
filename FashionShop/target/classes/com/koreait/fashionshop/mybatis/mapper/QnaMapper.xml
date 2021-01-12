@@ -6,6 +6,10 @@
 		select * from qna order by qna_id desc
 	</select>
 	
+	<insert id="insert" parameterType="Qna">
+		insert into qna(qna_id, title, writer, content) values(seq_qna.nextval, #{title}, #{writer}, #{content})
+	</insert>
+	
 </mapper>
 
 

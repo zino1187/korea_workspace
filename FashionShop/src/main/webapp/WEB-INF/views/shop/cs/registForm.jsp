@@ -65,9 +65,9 @@
         <!-- ****** Top Discount Area End ****** -->
 		<div class="container">   
 		  <form id="qnaForm">
-		    <input type="text" id="fname" name="firstname" placeholder="Your name..">
-		    <input type="text" id="lname" name="lastname" placeholder="Your last name..">
-		    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+		    <input type="text" name="title" placeholder="Your name..">
+		    <input type="text" name="writer" placeholder="Your last name..">
+		    <textarea name="content" placeholder="Write something.." style="height:200px"></textarea>
 		    <input type="button" value="Submit">
 		  </form>
 	</div>	

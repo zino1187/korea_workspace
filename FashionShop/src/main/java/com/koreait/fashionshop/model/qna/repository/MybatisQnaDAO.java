@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.koreait.fashionshop.exception.QnaDMLException;
 import com.koreait.fashionshop.model.domain.Member;
 import com.koreait.fashionshop.model.domain.Qna;
 
@@ -32,9 +33,11 @@ public class MybatisQnaDAO implements QnaDAO{
 	}
 
 	@Override
-	public void insert(Qna qna) {
-		// TODO Auto-generated method stub
-		
+	public void insert(Qna qna) throws QnaDMLException{
+		int result = sqlSessionTemplate.insert("Qna.insert", qna);
+		if(result==0) {
+			throw new QnaDMLException("질문등록에 실패하였습니다");
+		}
 	}
 
 	@Override
