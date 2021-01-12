@@ -67,11 +67,8 @@ public class MemberController {
 
 	//로그인 홈 요청 
 	@RequestMapping(value="/shop/member/loginForm", method=RequestMethod.GET)
-	public ModelAndView getLoginForm() {
-		List topList = topCategoryService.selectAll();
+	public ModelAndView getLoginForm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("shop/member/signin");
-		mav.addObject("topList", topList); //담기
-		
 		return mav;
 	}
 	

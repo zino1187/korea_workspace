@@ -7,6 +7,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Pager {
 	private int totalRecord; //�? ?��코드 ?�� 
 	private int pageSize = 10; //?��?���??�� 보여�? ?��코드 ?�� 
