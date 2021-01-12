@@ -7,17 +7,18 @@
 		<typeAlias type="com.koreait.fashionshop.model.domain.TopCategory" 		alias="TopCategory"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.SubCategory" 		alias="SubCategory"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.Product" 				alias="Product"/>		
-		<typeAlias type="com.koreait.fashionshop.model.domain.Score" 					alias="Score"/>		
+		<typeAlias type="com.koreait.fashionshop.model.domain.Score" 				alias="Score"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.Image" 				alias="Image"/>		
 		<typeAlias type="com.koreait.fashionshop.model.domain.Psize" 					alias="Psize"/>		
-		<typeAlias type="com.koreait.fashionshop.model.domain.Color" 					alias="Color"/>
-		<typeAlias type="com.koreait.fashionshop.model.domain.Member" 				alias="Member"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Color" 				alias="Color"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Member" 			alias="Member"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.Cart" 					alias="Cart"/>
-		<typeAlias type="com.koreait.fashionshop.model.domain.OrderState" 			alias="OrderState"/>
-		<typeAlias type="com.koreait.fashionshop.model.domain.Paymethod" 			alias="Paymethod"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.OrderState" 		alias="OrderState"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Paymethod" 		alias="Paymethod"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.OrderSummary" 	alias="OrderSummary"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.OrderDetail" 		alias="OrderDetail"/>
 		<typeAlias type="com.koreait.fashionshop.model.domain.Receiver" 			alias="Receiver"/>
+		<typeAlias type="com.koreait.fashionshop.model.domain.Qna" 					alias="Qna"/>
 		
 	</typeAliases>
 	

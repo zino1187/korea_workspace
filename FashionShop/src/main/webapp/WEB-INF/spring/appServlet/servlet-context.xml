@@ -63,7 +63,8 @@
 		</aop:aspect>
  		-->		
 		<aop:aspect id="sessionCheckAspect" ref="memberSessionCheckAspect">
-			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.payment..*(..))" id="sessionPointcut"/>
+			<aop:pointcut expression="execution(public * com.koreait.fashionshop.controller.payment..*(..))
+			||execution(public * com.koreait.fashionshop.controller.cs..*(..))" id="sessionPointcut"/>
 			<aop:around method="sessionCheck" pointcut-ref="sessionPointcut"/>
 		</aop:aspect>
 		

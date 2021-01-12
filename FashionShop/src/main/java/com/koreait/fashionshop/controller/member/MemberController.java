@@ -35,10 +35,8 @@ public class MemberController {
 	
 	//회원가입폼 요청 
 	@RequestMapping(value="/shop/member/registForm", method=RequestMethod.GET)
-	public ModelAndView getRegistForm() {
-		List topList = topCategoryService.selectAll();
+	public ModelAndView getRegistForm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("shop/member/signup");
-		mav.addObject("topList", topList); //담기
 		return mav;
 	}
 	

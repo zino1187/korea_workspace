@@ -33,6 +33,7 @@ public class GlobalDataAspect {
 		//topList를 저장해야 하는 경우와 그렇지 않은 경우를 나누어서 처리
 		if(	uri.equals("/shop/member/login") || 
 			uri.equals("/shop/member/regist") ||
+			uri.equals("/admin") ||
 			uri.equals("/admin/product/regist")
 		) {
 			result=joinPoint.proceed(); //원래 호출하려 했던 메서드 호출!! go ahead
