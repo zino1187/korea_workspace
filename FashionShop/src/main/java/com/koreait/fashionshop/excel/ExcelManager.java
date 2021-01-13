@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -34,7 +35,13 @@ public class ExcelManager {
 				int columCount=row.getPhysicalNumberOfCells();
 				for(int a=0;a<columCount;a++) {
 					XSSFCell cell=row.getCell(a); //컬럼 한개를 접근
-					System.out.print(cell.getStringCellValue());
+					
+					//각셀의 자료형을 판단하여 그에 맞게 접근 
+					if(cell.getCellType() == CellType.STRING ) {//셀의 자료형이 문자인경우..
+						System.out.print(cell.getStringCellValue()+"\t");
+					}else if(cell.getCellType() == CellType.NUMERIC) {
+						System.out.print((int)cell.getNumericCellValue()+"\t");
+					}
 				}
 				System.out.println();//줄바꿈
 			}

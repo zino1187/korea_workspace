@@ -1,4 +1,4 @@
-package com.koreait.fashionshop.controller.admin;
+package com.koreait.fashionshop.admin.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

@@ -1,5 +1,6 @@
 package com.koreait.fashionshop.controller.product;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -10,10 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.exception.ProductRegistException;
@@ -110,7 +114,24 @@ public class ProductController implements ServletContextAware{
 		return sb.toString();
 	}
 	 */
-
+	
+	@GetMapping("/admin/product/excel/registform")
+	public String getExcelForm(HttpServletRequest request) {
+		return "admin/product/excel_form";
+	}
+	
+	//엑셀에 의한 상품등록 요청 처리 
+	@PostMapping("/admin/product/excel/regist")
+	@ResponseBody // 비동기 이므로 
+	public String registByExcel(HttpServletRequest request, MultipartFile dump) {
+		
+		String path = fileManager.getSaveBasicDir()+File.separator+dump.getOriginalFilename(); //저장할 파일명
+		fileManager.saveFile(path, dump);
+		
+		return null;
+	}
+	
+	
 	
 	//상품목록
 	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET )
@@ -134,7 +155,7 @@ public class ProductController implements ServletContextAware{
 	//상품 등록 
 	@RequestMapping(value="/admin/product/regist", method=RequestMethod.POST, produces ="text/html;charset=utf8")
 	@ResponseBody
-	public String registProduct(HttpServletRequest request,Product product, String[] test) {
+	public String registProduct(HttpServletRequest request, Product product, String[] test) {
 		logger.debug("하위카테고리 "+product.getSubCategory().getSubcategory_id());
 		logger.debug("상품명 "+product.getProduct_name());
 		logger.debug("가격 "+product.getPrice());
