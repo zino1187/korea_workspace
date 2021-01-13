@@ -70,7 +70,7 @@
 					<td><%=qna.getTitle() %></td>
 					<td><%=qna.getWriter() %></td>
 					<td><%=qna.getRegdate()%></td>
-					<td><%=qna.getHit() %></td>
+					<td><%=qna.getHit() %></td> 
 				</tr>
 				<%}%>
 				<tr>
