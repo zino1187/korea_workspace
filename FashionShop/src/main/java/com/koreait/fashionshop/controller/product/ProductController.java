@@ -21,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.koreait.fashionshop.exception.ProductRegistException;
+import com.koreait.fashionshop.exception.UploadFailException;
 import com.koreait.fashionshop.model.common.FileManager;
+import com.koreait.fashionshop.model.common.MessageData;
 import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
@@ -121,17 +123,20 @@ public class ProductController implements ServletContextAware{
 	}
 	
 	//엑셀에 의한 상품등록 요청 처리 
-	@PostMapping("/admin/product/excel/regist")
+	@RequestMapping(value="/admin/product/excel/regist", method=RequestMethod.POST,  produces="text/html;charset=utf-8")
 	@ResponseBody // 비동기 이므로 
 	public String registByExcel(HttpServletRequest request, MultipartFile dump) {
-		
 		String path = fileManager.getSaveBasicDir()+File.separator+dump.getOriginalFilename(); //저장할 파일명
 		fileManager.saveFile(path, dump);
 		
-		return null;
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":1,");
+		sb.append("\"msg\":\"엑셀등록 성공\"");
+		sb.append("}");
+		
+		return sb.toString();
 	}
-	
-	
 	
 	//상품목록
 	@RequestMapping(value="/admin/product/list", method=RequestMethod.GET )
@@ -185,19 +190,6 @@ public class ProductController implements ServletContextAware{
 	//상품 삭제
 
 	
-	//예외처리 
-	//위의 메서드 중에서 하나라도 예외가 발생하면, 아래의 핸들러가 동작
-	@ExceptionHandler(ProductRegistException.class)
-	@ResponseBody
-	public String handleException(ProductRegistException e) {
-		StringBuilder sb = new StringBuilder();
-		sb.append("{");
-		sb.append("\"result\":0");
-		sb.append("\"msg\":\""+e.getMessage()+"\"");
-		sb.append("}");
-		return sb.toString();
-	}
-	
 	
 	
 	/* *********************************************************************** 
@@ -223,6 +215,32 @@ public class ProductController implements ServletContextAware{
 		
 		return mav;
 	}
+	
+	//예외처리 
+	//위의 메서드 중에서 하나라도 예외가 발생하면, 아래의 핸들러가 동작
+	@ExceptionHandler(ProductRegistException.class)
+	@ResponseBody
+	public String handleException(ProductRegistException e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":0");
+		sb.append("\"msg\":\""+e.getMessage()+"\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	@ExceptionHandler(UploadFailException.class)
+	@ResponseBody
+	public String handleException(UploadFailException e) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"result\":0");
+		sb.append("\"msg\":\""+e.getMessage()+"\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
+	
 }
 
 
