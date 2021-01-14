@@ -1,4 +1,4 @@
-package com.koreait.fashionshop.excel;
+package com.koreait.fashionshop.model.excel;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

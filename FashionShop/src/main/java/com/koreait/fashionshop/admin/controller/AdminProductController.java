@@ -1,6 +1,7 @@
 package com.koreait.fashionshop.admin.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -26,6 +27,7 @@ import com.koreait.fashionshop.model.common.MessageData;
 import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
+import com.koreait.fashionshop.model.product.service.DumpService;
 import com.koreait.fashionshop.model.product.service.ProductService;
 import com.koreait.fashionshop.model.product.service.SubCategoryService;
 import com.koreait.fashionshop.model.product.service.TopCategoryService;
@@ -42,10 +44,14 @@ public class AdminProductController implements ServletContextAware{
 	private SubCategoryService subCategoryService;
 	
 	@Autowired
-	private ProductService productService;
+	private ProductService productService; //낱개의 상품등록시
+	
+	@Autowired
+	private DumpService dumpService; //대량 등록시 
 	
 	@Autowired
 	private FileManager fileManager;
+	
 	
 	//우리가 왜 ServletContext를 써야하는가?   getRealPath() 사용하려고!!!
 	private ServletContext servletContext;
@@ -101,6 +107,9 @@ public class AdminProductController implements ServletContextAware{
 		messageData.setResultCode(1);
 		messageData.setMsg("엑셀등록 성공");
 		
+		//엑셀 읽어서 데이터베이스에 넣기!! 
+		dumpService.regist(path);
+
 		return messageData;
 	}
 	

@@ -13,7 +13,6 @@
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
-		
 	<context:component-scan base-package="com.koreait.fashionshop.client.controller"/>
 	
 	<beans:bean id="memberSessionCheckAspect" class="com.koreait.fashionshop.client.aop.MemberSessionCheckAspect"/>
