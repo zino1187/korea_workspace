@@ -3,6 +3,7 @@
 <mapper namespace="Product">
 	<!-- 상품과 연계된 부모를같이 가져오자 , 상품입장에서는 부모와 1:1 관계이다 (association) -->
 	
+	
 	<resultMap id="productSubcategoryMap" type="Product">
 		<id column="product_id" 					property="product_id"/>
 		<result column="product_name" 		property="product_name"/>

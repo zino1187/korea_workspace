@@ -73,7 +73,7 @@ function regist(){
 		processData:false, /* false일 경우 query-string으로 전송하지 않음*/
 		type:"post",
 		success:function(responseData){
-			alert(responseData);
+			console.log(responseData);
 			//var json = JSON.parse(responseData); //string --> json 으로 파싱..
 			//alert(json);
 		}
@@ -91,7 +91,7 @@ function regist(){
 	<!-- 파일 최대 4개까지 지원 -->
 	<p>엑셀파일 선택: <input type="file"  name="dump"></p>
     <input type="button" value="데이터 등록" onClick="regist()">
-    <input type="button" value="상품목록" onClick="location.href='/client/notice/list'">
+    <input type="button" value="상품목록" onClick="location.href='/admin/product/list'">
   </form>
 </div>
 

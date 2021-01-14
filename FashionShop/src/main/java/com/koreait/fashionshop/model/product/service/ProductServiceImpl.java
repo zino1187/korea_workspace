@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.koreait.fashionshop.exception.ProductRegistException;
+import com.koreait.fashionshop.exception.UploadFailException;
 import com.koreait.fashionshop.model.common.FileManager;
 import com.koreait.fashionshop.model.domain.Color;
 import com.koreait.fashionshop.model.domain.Image;
@@ -52,7 +53,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void regist(FileManager fileManager, Product product) throws ProductRegistException{
+	public void regist(FileManager fileManager, Product product) throws UploadFailException, ProductRegistException{
 		
 		String ext=fileManager.getExtend(product.getRepImg().getOriginalFilename());
 		product.setFilename(ext); //확장자 결정

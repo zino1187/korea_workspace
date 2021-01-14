@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class AdminController {
-
 	//관리자모드 메인 요청
-	@RequestMapping("/admin")
+	//dd에명시한 url-pattern의 나머지 경로로 매핑을 함
+	@RequestMapping("/secure")
 	public String adminMain(HttpServletRequest request) {
 		return "admin/main";
 	}

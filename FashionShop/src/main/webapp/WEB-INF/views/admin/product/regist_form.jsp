@@ -241,6 +241,9 @@ function regist(){
 		processData:false, /* false일 경우 query-string으로 전송하지 않음*/
 		type:"post",
 		success:function(responseData){
+			alert(responseData);
+			
+			/*
 			var json = JSON.parse(responseData); //string --> json 으로 파싱..
 			if(json.result==1){
 				alert(json.msg);
@@ -248,6 +251,7 @@ function regist(){
 			}else{
 				alert(json.msg);
 			}
+			*/
 		}
 	});
 	
@@ -308,7 +312,7 @@ function regist(){
     
     <textarea id="detail" name="detail" placeholder="상세정보.." style="height:200px"></textarea>
     <input type="button" value="글등록" onClick="regist()">
-    <input type="button" value="목록보기" onClick="location.href='/client/notice/list'">
+    <input type="button" value="목록보기" onClick="location.href='/admin/product/list'">
   </form>
 </div>
 
