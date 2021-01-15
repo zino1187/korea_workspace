@@ -9,10 +9,13 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.koreait.fashionshop.model.domain.Color;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.domain.SubCategory;
 
 /*
@@ -20,9 +23,12 @@ import com.koreait.fashionshop.model.domain.SubCategory;
  * */
 @Component  //scan의 대상이 됨
 public class ProductConverter {
+	private static final Logger logger=LoggerFactory.getLogger(ProductConverter.class);
 	
 	//누군가 이 메서드를 호출하는 자는, 자신이 보유한 스트림 주소를 넘기면 됨..
 	public List convertFromFile(String path) {
+		logger.debug("convertFromFile 에서의 path is "+path);
+		
 		List<Product> productList = new ArrayList<Product>();
 		FileInputStream fis =null;
 		try {
@@ -51,11 +57,11 @@ public class ProductConverter {
 						product.setSubCategory(subCategory);
 					}else if(a==1) {//product_name
 						product.setProduct_name(cell.getStringCellValue());
-					}else if(a==2) {
+					}else if(a==2) {//price
 						product.setPrice((int)cell.getNumericCellValue());
-					}else if(a==3) {
+					}else if(a==3) {//brand
 						product.setBrand(cell.getStringCellValue());
-					}else if(a==4){//색상 
+					}else if(a==4){//color 
 						String[] colors=cell.getStringCellValue().split(","); //점을 기준으로 나누면, 스트링 배열이반환!!
 						List colorList = new ArrayList();
 						for(String color :colors) {
@@ -64,9 +70,18 @@ public class ProductConverter {
 							colorList.add(obj);
 						}
 						product.setColorList(colorList);
-					} if(a==6) {
+					}if(a==5) {//psize 
+						String[] psize=cell.getStringCellValue().split(",");
+						List psizeList = new ArrayList();
+						for(String size : psize) {
+							Psize obj = new Psize(); //empty vo
+							obj.setFit(size); //사이즈 정보 넣기
+							psizeList.add(obj); //리스트에 담기
+						}
+						product.setPsizeList(psizeList);
+					} if(a==6) {//detail
 						product.setDetail(cell.getStringCellValue());
-					}else if(a==7) {
+					}else if(a==7) {//filename
 						product.setFilename(cell.getStringCellValue());
 					}
 				}

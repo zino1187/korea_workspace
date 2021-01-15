@@ -7,9 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.fashionshop.model.domain.Color;
 import com.koreait.fashionshop.model.domain.Product;
+import com.koreait.fashionshop.model.domain.Psize;
 import com.koreait.fashionshop.model.excel.ProductConverter;
+import com.koreait.fashionshop.model.product.repository.ColorDAO;
 import com.koreait.fashionshop.model.product.repository.ProductDAO;
+import com.koreait.fashionshop.model.product.repository.PsizeDAO;
 
 @Service
 public class DumpServiceImpl implements DumpService{
@@ -21,17 +25,40 @@ public class DumpServiceImpl implements DumpService{
 	@Autowired
 	private ProductDAO productDAO;
 	
+	@Autowired
+	private ColorDAO colorDAO;
+	
+	@Autowired
+	private PsizeDAO psizeDAO;
+	
 	@Override
 	public void regist(String path) {
 		//엑셀을 읽어서 데이터로 넣기
 		List<Product> productList = productConverter.convertFromFile(path);
 		logger.debug("엑셀파일을 분석하여 나온 결과 리스트 "+productList.size());
 		
+		//리스트에 담겨진 만큼 product 테이블에 insert!!
 		for(int i=0;i<productList.size();i++) {
-			Product product = productList.get(i);
-			productDAO.insert(product);
+			Product product = productList.get(i);//이 시점에는 아직 product_id가 미결정(insert 전이기 때문)
+			productDAO.insert(product); //product_id가 결정!!!
+			//따라서 이 라인서부터는 product vo에 product_id가 채워져 있다..
 			//인서트 하자마자 이 시점부터는 product vo에 이미 pk값이 채워져 있는 상태이다..
+			
+			//색상넣기!! ( 하나의 상품에 딸려있는 여러개의 색상을 넣자, 그리기 위해서는 product_id가 필요함) 
+			for(Color color : product.getColorList()) {
+				color.setProduct_id(product.getProduct_id());//이 시점부터는 컬러가 fk보유했으므로, 색상테이블에 
+				//데이터 넣어보자!!
+				colorDAO.insert(color);
+			}
+			
+			//사이즈 넣기
+			for(Psize psize :  product.getPsizeList()) {
+				psize.setProduct_id(product.getProduct_id()); //fk 넣어주기!!
+				psizeDAO.insert(psize);
+			}
 		}
+		
+		
 	}
 	
 }
