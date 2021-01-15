@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.koreait.fashionshop.model.common.FileManager;
 import com.koreait.fashionshop.model.domain.Color;
 import com.koreait.fashionshop.model.domain.Product;
 import com.koreait.fashionshop.model.domain.Psize;
@@ -56,6 +57,10 @@ public class DumpServiceImpl implements DumpService{
 				psize.setProduct_id(product.getProduct_id()); //fk 넣어주기!!
 				psizeDAO.insert(psize);
 			}
+			
+			//이미 들어간 파일명을 product_id + 확장자 조합으로 교체  ex)  35.jpg
+			product.setFilename(product.getProduct_id()+"."+FileManager.getExtend(product.getFilename()));
+			productDAO.update(product);
 		}
 		
 		

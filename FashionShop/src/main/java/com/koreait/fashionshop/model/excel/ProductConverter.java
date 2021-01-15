@@ -82,7 +82,7 @@ public class ProductConverter {
 					} if(a==6) {//detail
 						product.setDetail(cell.getStringCellValue());
 					}else if(a==7) {//filename
-						product.setFilename(cell.getStringCellValue());
+						product.setFilename(cell.getStringCellValue()); //엑셀에 들어있는 원본파일명 (ex: tshirt.jpg)
 					}
 				}
 				//완성된 상품을 리스트에 담자 
