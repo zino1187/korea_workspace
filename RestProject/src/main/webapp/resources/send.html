@@ -24,7 +24,7 @@ function regist(){
 	$.ajax({
 		url:"/rest/member",
 		type:"post",
-		dataType:"application/json",
+		contentType:"application/json", //http통신의 헤더에 들어가는 정보
 		data:JSON.stringify(obj),
 		success:function(response){
 			console.log(response);
