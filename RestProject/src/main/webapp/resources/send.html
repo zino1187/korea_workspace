@@ -39,9 +39,9 @@ function getList(){
 		url:"/rest/member",
 		type:"GET",
 		success:function(responseData){ //서버의 응답처리
-			console.log("성공 응답데이터 받음 ", responseData.statusCode);
+			console.log("성공 응답데이터 받음 ", responseData);
 			//요청에 대한 성공실패를 어떻게 판단할까?
-			
+			printData(responseData);
 		},
 		error:function(xhr, status, error){
 			console.log("에러 응답 데이터 받음 : xhr = ",xhr);
@@ -51,6 +51,26 @@ function getList(){
 	});	
 }
 
+//list-area에 서버로 부터 넘겨받은 제이슨 데이터 출력
+function printData(responseData){
+	var tag="<table border=\"1px\">";
+	tag+="<tr>";
+	tag+="<td>ID</td>";
+	tag+="<td>Pass</td>";
+	tag+="<td>Name</td>";
+	tag+="</tr>";
+	for(var i=0;i<responseData.length;i++){
+		var json = responseData[i];
+		tag+="<tr>";
+		tag+="<td>"+json.m_id+"</td>";
+		tag+="<td>"+json.m_pass+"</td>";
+		tag+="<td>"+json.m_name+"</td>";
+		tag+="</tr>";
+	}
+	tag+="</table>";	
+	
+	$("#list-area").html(tag);
+}
 </script>
 </head>
 <body>
@@ -61,6 +81,15 @@ function getList(){
 	</form>
 	<button type="button" onClick="regist()">등록하기</button>
 	<button type="button" onClick="getList()">목록가져오기</button>
+	<div id="list-area"> 
+	</div>
 	
 </body>
 </html>
+
+
+
+
+
+
+
