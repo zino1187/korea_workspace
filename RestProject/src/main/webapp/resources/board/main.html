@@ -62,19 +62,27 @@ tr:nth-child(even) {
 //아래의 테이블을 하나의 컴포넌트로 등록하여 재사용할 예정임..
 class TableContent extends React.Component{
 
+	itemClick(board_id){
+		return function(){
+			console.log("board_id is ", board_id);		
+			//한건 가져오기!! board_id 를 알아야 한다..
+		}
+	}
+
 	render(){
 		// js코드가 올수있다..
 		console.log("dataList is ", this.props.dataList);			
 		var row=[]; //define empty js array
 		
 		for(var i=0;i<this.props.dataList.length;i++){
+			var board = this.props.dataList[i];
 			row.push(
 					<tr>
-						<td>Jill</td>
-						<td>dd</td>
-						<td>50</td>
-						<td>50</td>
-						<td>50</td>
+						<td>{i}</td>
+						<td onClick={this.itemClick(board.board_id)}>{board.title}</td>
+						<td>{board.writer}</td>
+						<td>{board.regdate}</td>
+						<td>{board.hit}</td>
 					</tr>
 			);
 		}
@@ -133,8 +141,6 @@ function regist(){
 
 //화면 동적 출력
 function getList(){
-	var boardList=["딸기","바나나","오렌지","포도"];
-
 	//rest server에서 데이터 가져오기 
 	$.ajax({
 		url:"/rest/board",
@@ -166,7 +172,7 @@ function getList(){
 					</form>
 				</div>			
 			</div>
-			<div class="col-sm-8" style="background-color:lavenderblush;">
+			<div class="col-sm-8" style="background-color:lavenderblush;overflow:scroll;height:500px;">
 				<div id="content-list"></div>
 			</div>
 		</div>
