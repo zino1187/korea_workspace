@@ -3,16 +3,13 @@ package com.koreait.restproject.rest.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.koreait.restproject.exception.BoardUpdateException;
-import com.koreait.restproject.message.Message;
 import com.koreait.restproject.model.board.service.BoardService;
 import com.koreait.restproject.model.domain.Board;
 
@@ -33,7 +30,16 @@ public class BoardController {
 	}
 	
 	
-	//한건 가져오기 요청 
+	//한건 가져오기 요청 명사/pk
+	@GetMapping("/board/{board_id}")
+	public Board getDetail(@PathVariable int board_id) {
+		log.debug("클라이언트가 보낸 파라미터는 "+board_id);
+		Board board = boardService.select(board_id);
+		return board;
+	}
+	
+	
+	//등록 요청 
 	@PostMapping("/board")
 	//@RequestBody : 클라이언트가 전송한 json데이터를 자바의 객체로 변환  (json --> java로 변환)
 	public ResponseEntity<Board> regist(@RequestBody Board board) {
@@ -46,7 +52,6 @@ public class BoardController {
 		return ResponseEntity.ok().body(board);//board_id가 이미 채워진 vo
 	}
 	
-	//등록 요청 
 	
 	//수정 요청 
 	
