@@ -58,7 +58,48 @@ tr:nth-child(even) {
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
 <script type="text/babel">
+//react를 이용하여 아래의 태그를 문자열처리 없이 그대로 사용해본다(사실 babel 이라는 자바스크립트 라이브러리가 사용)
+//아래의 테이블을 하나의 컴포넌트로 등록하여 재사용할 예정임..
+class TableContent extends React.Component{
+
+	render(){
+		// js코드가 올수있다..
+		console.log("dataList is ", this.props.dataList);			
+		var row=[]; //define empty js array
+		
+		for(var i=0;i<this.props.dataList.length;i++){
+			row.push(
+					<tr>
+						<td>Jill</td>
+						<td>dd</td>
+						<td>50</td>
+						<td>50</td>
+						<td>50</td>
+					</tr>
+			);
+		}
+
+		//return안에서는 babel의 데이터만 반환해야 한다!!(로직 작성못함...)
+		return (
+			<table>
+				<tr>
+					<th>No</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>등록일</th>
+					<th>조회수</th>
+				</tr>
+				{row}
+			</table>			
+		)
+	}
+}
+
 $(function(){
+
+
+	getList();//목록  가져오기 
+
 	$("#bt_regist").click(function(){
 		regist();
 	});	
@@ -92,31 +133,21 @@ function regist(){
 
 //화면 동적 출력
 function getList(){
-	
-	//react를 이용하여 아래의 태그를 문자열처리 없이 그대로 사용해본다(사실 babel 이라는 자바스크립트 라이브러리가 사용)
-	//아래의 테이블을 하나의 컴포넌트로 등록하여 재사용할 예정임..
-	class TableContent extends React.Component{
-		render(){
-			return (
-				<table>
-					<tr>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Points</th>
-					</tr>
-					<tr>
-						<td>Jill</td>
-						<td>Smith</td>
-						<td>50</td>
-					</tr>
-				</table>			
+	var boardList=["딸기","바나나","오렌지","포도"];
 
-			)
-		}
-	}
-	//우리가 정의한 컴포넌트를 사용해보자
-	ReactDOM.render(<TableContent /> , document.getElementById("content-list"));
-	
+	//rest server에서 데이터 가져오기 
+	$.ajax({
+		url:"/rest/board",
+		type:"GET",
+		success:function(responseData){
+			console.log("서버로부터 받은 json배열은 ", responseData);
+			//우리가 정의한 컴포넌트를 사용해보자
+			ReactDOM.render(<TableContent dataList={responseData} /> , document.getElementById("content-list"));
+		},
+		error:function(xhr, status, error){
+			console.log(xhr);
+		}		
+	});	
 }
 </script>
 </head>
@@ -127,7 +158,7 @@ function getList(){
 		<div class="row">
 			<div class="col-sm-4" style="background-color:lavender;">
 				<div class="container">
-					<form action="/action_page.php">
+					<form>
 						<input type="text" id="title" placeholder="제목입력..">
 						<input type="text" id="writer" placeholder="작성자 입력..">
 						<textarea id="content"  placeholder="Write something.." style="height:200px"></textarea>
