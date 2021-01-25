@@ -215,6 +215,34 @@ function del(){
 	});	
 } 
 
+//수정요청 
+function edit(){
+	var obj={}; //define empty json
+	obj["board_id"]=$("#board_id").val(); //board_id
+	obj["title"]=$("#title2").val(); //작성자
+	obj["writer"]=$("#writer2").val(); //제목
+	obj["content"]=$("#content2").val(); //내용
+	
+	var jsonString = JSON.stringify(obj);//전송하려면, 직렬화(데이터를 쪼개는 것)
+	console.log(jsonString);
+	
+ 	$.ajax({
+		url:"/rest/board",
+		type:"PUT",
+		data:jsonString,
+		contentType:"application/json;charset=utf-8",
+		success:function(responseData){
+			console.log("성공", responseData);
+			getDetail(responseData.board_id); //board_id
+		},
+		error:function(hxr, status, error){
+			console.log("에러",hxr);
+			alert(hxr.responseJSON.msg);
+		}
+	});
+	
+}
+
 </script>
 </head>
 <body>
