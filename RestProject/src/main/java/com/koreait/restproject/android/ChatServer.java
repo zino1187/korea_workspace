@@ -8,6 +8,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,6 +25,7 @@ public class ChatServer extends JFrame{
 	JScrollPane scroll;
 	Thread thread; //서버 가동 쓰레드, 메인쓰레드가 서버소켓의 accept() 에 의해 대기상태에 빠지면 안되므로.. 
 	ServerSocket server;//접속 감지목적의 소켓
+	Vector<ChatThread> vec; //접속한 클라이언트마다 생성된 ChatThread를 보관해놓을 컬렉션..
 	
 	public ChatServer() {
 		p_north = new JPanel();
@@ -31,6 +33,7 @@ public class ChatServer extends JFrame{
 		bt_start = new JButton("가동");
 		area = new JTextArea();
 		scroll= new JScrollPane(area);
+		vec = new Vector<ChatThread>();
 		
 		p_north.add(t_port);
 		p_north.add(bt_start);
@@ -59,13 +62,17 @@ public class ChatServer extends JFrame{
 				try {
 					server = new ServerSocket(Integer.parseInt(t_port.getText()));
 					area.append("서버가동..!!\n");
-					
-					Socket socket = server.accept(); //클라이언트 접속할때까지 대기
-					area.append("접속자 감지!!\n");
-					
-					ChatThread chatThread = new ChatThread(socket, ChatServer.this);
-					chatThread.start();//대화 시작!!
-					
+					while(true) {
+						Socket socket = server.accept(); //클라이언트 접속할때까지 대기
+						area.append("접속자 감지!!\n");
+						
+						ChatThread chatThread = new ChatThread(socket, ChatServer.this);
+						chatThread.start();//대화 시작!!
+						
+						//벡터에 지금 생성된 쓰레드 추가(이렇게 처리해야 접속자 명단을 얻을 수 있다..) 
+						vec.add(chatThread);
+						area.append("현재 접속자 수 :"+vec.size());
+					}
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
