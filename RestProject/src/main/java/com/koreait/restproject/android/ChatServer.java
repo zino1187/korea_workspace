@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -57,7 +58,8 @@ public class ChatServer extends JFrame{
 			public void run() {
 				try {
 					server = new ServerSocket(Integer.parseInt(t_port.getText()));
-					server.accept(); //클라이언트 접속할때까지 대기
+					Socket client = server.accept(); //클라이언트 접속할때까지 대기
+					
 					System.out.println("접속 감지!!");
 					
 				} catch (NumberFormatException e) {
