@@ -63,7 +63,7 @@ public class ChatServer extends JFrame{
 					Socket socket = server.accept(); //클라이언트 접속할때까지 대기
 					area.append("접속자 감지!!\n");
 					
-					ChatThread chatThread = new ChatThread(socket);
+					ChatThread chatThread = new ChatThread(socket, ChatServer.this);
 					chatThread.start();//대화 시작!!
 					
 				} catch (NumberFormatException e) {
