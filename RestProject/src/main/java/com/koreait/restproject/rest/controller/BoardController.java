@@ -80,8 +80,18 @@ public class BoardController {
 		log.debug("title is "+board.getTitle());
 		log.debug("writer is "+board.getWriter());
 		log.debug("content is "+board.getContent());
-		
+			
 		boardService.update(board);
+		
+		//웹소켓을 이용한 브로드케스트!! 
+		SocketMessage socketMessage = new SocketMessage();
+		socketMessage.setRequestCode("update");
+		socketMessage.setResultCode(200);
+		socketMessage.setMsg("수정성공");
+		
+		String jsonString = gson.toJson(socketMessage);
+		myWebSocketHandler.broadCast(jsonString);
+		
 		
 		return ResponseEntity.ok().body(board);
 	}
@@ -93,6 +103,16 @@ public class BoardController {
 		boardService.delete(board_id);
 		Message message = new Message();
 		message.setMsg("게시물 삭제 성공");
+		
+		//웹소켓을 이용한 브로드케스트!! 
+		SocketMessage socketMessage = new SocketMessage();
+		socketMessage.setRequestCode("delete");
+		socketMessage.setResultCode(200);
+		socketMessage.setMsg("삭제성공");
+		
+		String jsonString = gson.toJson(socketMessage);
+		myWebSocketHandler.broadCast(jsonString);
+		
 		return ResponseEntity.ok().body(message);
 	}
 	

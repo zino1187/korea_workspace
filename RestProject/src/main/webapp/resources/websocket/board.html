@@ -113,12 +113,16 @@ $(function(){
 
     //수정
     $("#bt_edit").click(function(){
-        edit();
+		if(confirm("수정하시겠습니까?")){
+        	edit();
+		}
     });
 
     //삭제
     $("#bt_del").click(function(){
-        del();
+		if(confirm("삭제하시겠습니까?")){
+        	del();
+		}
     });
 
 });
@@ -160,13 +164,54 @@ function getList(){
 }
 
 //한건 가져오기 
-//시간 10분 드립니다. 상세보기 처리해주세요~
 function getDetail(board_id){
     $.ajax({
         url:"/rest/board/"+board_id,
         type:"GET",
         success:function(responseData){
-            console.log(responseData);
+			console.log(responseData);
+
+            //우측 화면에 출력
+			$("#board_id").val(responseData.board_id); 
+			$("#title2").val(responseData.title); 
+			$("#writer2").val(responseData.writer); 
+			$("#content2").val(responseData.content); 
+        },
+        error:function(xhr, result, error){
+            console.log(xhr);
+        }
+    });
+}
+
+//삭제 
+function del(){
+	$.ajax({
+		url:"/rest/board/"+$("#board_id").val(), 
+		type:"DELETE",
+		success:function(responseData){
+			console.log(responseData);
+		},
+		error:function(xhr, result, error){
+            console.log(xhr);
+        }
+	});
+}
+
+function edit(){
+    var form = $("#regist-form").serialize();
+    var json={};
+	json["board_id"]=$("#board_id").val();
+    json["title"]=$("#title2").val();
+    json["writer"]=$("#writer2").val();
+    json["content"]=$("#content2").val();
+
+    $.ajax({
+        url:"/rest/board",
+        type:"PUT",
+        data: JSON.stringify(json), 
+        contentType:"application/json;charset=utf-8",
+        success:function(responseData){
+            console.log("서버가 수정후 보낸 코드는 ",responseData);
         },
         error:function(xhr, result, error){
             console.log(xhr);
@@ -234,6 +279,7 @@ function enter(){
     <div class="col-sm-3" style="background-color:lavender;">
         <div class="container">
             <form>
+            	<input type="hidden" id="board_id">
                 <input type="text" id="title2" placeholder="Your name..">
                 <input type="text" id="writer2" placeholder="Your last name..">
                 <textarea id="content2" placeholder="Write something.." style="height:200px"></textarea>
